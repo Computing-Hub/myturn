@@ -2027,7 +2027,7 @@ function showCompleteScreen(earned, perfect, replay) {
   const inner = document.getElementById("completeInner");
   inner.innerHTML = "";
 
-  inner.appendChild(el("div", "big-emoji", "🐍"));
+  inner.appendChild(el("div", "big-emoji", "🐄"));
   inner.appendChild(el("h2", null, replay ? "Practice complete!" : "Level complete!"));
   inner.appendChild(el("div", "sub", esc(session.topic.title) + " · " + esc(session.level.name)));
   if (perfect && !replay) inner.appendChild(el("div", "perfect-badge", "⭐ Perfect lesson"));
