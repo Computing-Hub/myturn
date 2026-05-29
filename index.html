@@ -3,15 +3,15 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-<title>Indent — Learn Python the fun way</title>
-<meta name="description" content="A Duolingo-style trainer for learning Python." />
+<title>MyTurn — Learn Jersey civics the fun way</title>
+<meta name="description" content="A Duolingo-style trainer for Jersey (Channel Islands) civics: voting, the States, parishes, youth services and more." />
 <meta name="theme-color" content="#58cc02" />
 <link rel="manifest" href="./manifest.json" />
 <link rel="icon" type="image/png" href="./icon-192.png" />
 <link rel="apple-touch-icon" href="./apple-touch-icon.png" />
 <meta name="apple-mobile-web-app-capable" content="yes" />
 <meta name="apple-mobile-web-app-status-bar-style" content="default" />
-<meta name="apple-mobile-web-app-title" content="Indent" />
+<meta name="apple-mobile-web-app-title" content="MyTurn" />
 <meta name="mobile-web-app-capable" content="yes" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -603,8 +603,8 @@
     </div>
     <div class="map-hero">
       <img class="mascot" src="./mascot.svg" alt="" width="64" height="64" decoding="async">
-      <h1>Indent</h1>
-      <p>Learn Python the fun way</p>
+      <h1>MyTurn</h1>
+      <p>Learn Jersey civics the fun way</p>
     </div>
     <div class="arcade-cta-wrap">
       <button class="arcade-cta" id="openArcadeBtn">
@@ -625,7 +625,7 @@
       </button>
     </div>
     <main id="path"></main>
-    <div class="credit">Designed and created by Coderra.je</div>
+    <div class="credit">A civics trainer for Jersey, Channel Islands</div>
   </div>
 
   <!-- ============ LESSON / ARCADE GAMEPLAY SCREEN ============ -->
@@ -741,1047 +741,743 @@
 "use strict";
 
 /* ===================== COURSE CONTENT =====================
-   Six topics. Each has 3 progressive Levels (L1 → L2 → L3).
-   Advanced topics (advanced: true) unlock once L2 has been
-   completed in at least 2 of the four core topics. */
+   Eight topics covering Jersey (Channel Islands) civics.
+   Core topics have 4 levels (L1 → L4); advanced topics have 3.
+   Advanced topics unlock once L2 has been completed in at least
+   two of the four core topics. Facts reflect the post-7-June-2026
+   States composition (9 Senators + 28 Deputies + 12 Connétables). */
 const TOPICS = [
   {
-    id: "vars", title: "Variables", icon: "📦",
+    id: "vote", title: "Voting", icon: "🗳️",
     color: "var(--green)", colorD: "var(--green-d)",
     levels: [
       {
-        id: "vars_l1", name: "Names & Assignment", emoji: "📝",
+        id: "vote_l1", name: "Who Can Vote", emoji: "🪪",
         exercises: [
-          { type: "mc", q: "What does the = sign do in Python?",
+          { type: "mc", q: "What is the minimum voting age in Jersey?",
+            choices: ["16", "17", "18", "21"], answer: "16" },
+          { type: "mc", q: "Do you need to be a British citizen to vote in Jersey?",
             choices: [
-              "Stores the right-hand value in the variable on the left",
-              "Checks if two values are equal",
-              "Prints a value on screen",
-              "Multiplies two numbers"
+              "No — citizenship is not required",
+              "Yes — only British citizens can vote",
+              "Only Jersey-born citizens can vote",
+              "Only Commonwealth citizens can vote"
             ],
-            answer: "Stores the right-hand value in the variable on the left" },
-          { type: "fill", q: "Create a variable called count with the value 0.",
-            code: "count = ___", answer: "0" },
-          { type: "mc", q: "Which is a valid Python variable name?", codeChoices: true,
-            choices: ["my_score", "2cool", "my score", "class"],
-            answer: "my_score" },
-          { type: "mc", q: "By convention, how do we name a constant in Python?", codeChoices: true,
-            choices: ["MAX_SPEED", "maxSpeed", "max-speed", "Max_Speed"],
-            answer: "MAX_SPEED" },
-          { type: "mc", q: "Which is the most sensible name for a player's age?", codeChoices: true,
-            choices: ["age", "a", "x1", "thingy"],
-            answer: "age" },
-          { type: "mc", q: "What does this print?",
-            code: "name = \"Sam\"\nname = \"Alex\"\nprint(name)",
-            choices: ["Alex", "Sam", "Sam Alex", "Error"],
-            answer: "Alex" },
-          { type: "tokens", q: "Store the value 99 in a variable called price.",
-            tokens: ["price", "=", "99"] }
+            answer: "No — citizenship is not required" },
+          { type: "mc", q: "Which residency rule lets you vote in Jersey?",
+            choices: [
+              "One year of continuous residence, OR six months plus an earlier five years",
+              "Five years of continuous residence",
+              "Any length — there is no residency rule",
+              "Ten years of continuous residence"
+            ],
+            answer: "One year of continuous residence, OR six months plus an earlier five years" },
+          { type: "fill", q: "Fill in the voting age.",
+            code: "You can vote in Jersey from age ___.", answer: "16" },
+          { type: "mc", q: "Which of these does NOT decide whether you can vote?",
+            choices: ["Whether you own property", "Your age", "Your length of residence", "Whether you are on the register"],
+            answer: "Whether you own property" },
+          { type: "tokens", q: "Build the rule: minimum voting age in Jersey.",
+            tokens: ["You", "must", "be", "16", "or", "over"] }
         ]
       },
       {
-        id: "vars_l2", name: "Data Types", emoji: "🔢",
+        id: "vote_l2", name: "Getting on the Register", emoji: "📋",
         exercises: [
-          { type: "mc", q: "What is the type of 42?", codeChoices: true,
-            choices: ["int", "float", "str", "bool"], answer: "int" },
-          { type: "mc", q: "What is the type of 3.14?", codeChoices: true,
-            choices: ["float", "int", "str", "bool"], answer: "float" },
-          { type: "mc", q: "What is the type of \"hello\"?", codeChoices: true,
-            choices: ["str", "int", "list", "bool"], answer: "str" },
-          { type: "mc", q: "What is the type of True?", codeChoices: true,
-            choices: ["bool", "str", "int", "True"], answer: "bool" },
-          { type: "mc", q: "What does this print?", code: "print(int(\"7\") + 3)",
-            choices: ["10", "73", "\"73\"", "Error"], answer: "10" },
-          { type: "mc", q: "What does this print?", code: "print(str(5) + str(3))",
-            choices: ["53", "8", "\"53\"", "Error"], answer: "53" },
-          { type: "fill", q: "Convert the string \"12\" to a whole number.",
-            code: "n = ___(\"12\")", answer: "int" }
+          { type: "mc", q: "How are most Jersey voters added to the register?",
+            choices: [
+              "Automatic Voter Registration (AVR)",
+              "By filling in a paper form every year",
+              "Through their employer",
+              "By turning up on election day"
+            ],
+            answer: "Automatic Voter Registration (AVR)" },
+          { type: "mc", q: "What is the Supplementary Register for?",
+            choices: [
+              "Voters not picked up by automatic registration",
+              "Candidates standing for election",
+              "Postal-vote-only voters",
+              "Honorary police officers"
+            ],
+            answer: "Voters not picked up by automatic registration" },
+          { type: "mc", q: "AVR stands for…",
+            choices: ["Automatic Voter Registration", "Annual Voter Review", "Approved Voter Roll", "Adult Voting Rights"],
+            answer: "Automatic Voter Registration" },
+          { type: "fill", q: "Complete the acronym.",
+            code: "AVR = Automatic ___ Registration", answer: "Voter" },
+          { type: "mc", q: "If AVR has not added you, what should you do?",
+            choices: [
+              "Apply to be added to the Supplementary Register",
+              "Wait — there is no other way",
+              "Vote at any parish hall without registering",
+              "Ask your employer to register you"
+            ],
+            answer: "Apply to be added to the Supplementary Register" }
         ]
       },
       {
-        id: "vars_l3", name: "Updating Values", emoji: "✨",
+        id: "vote_l3", name: "How To Vote", emoji: "✉️",
         exercises: [
-          { type: "mc", q: "What does  x += 1  mean?",
+          { type: "mc", q: "How many ways can you cast your vote in Jersey?",
+            choices: ["Three — in-person, postal, pre-poll", "One — only in person on election day", "Two — in-person or online", "Four — including online voting"],
+            answer: "Three — in-person, postal, pre-poll" },
+          { type: "mc", q: "On election day, what hours are polling stations open?",
+            choices: ["8am to 8pm", "9am to 5pm", "7am to 10pm", "10am to 4pm"],
+            answer: "8am to 8pm" },
+          { type: "mc", q: "What is \"pre-poll\" voting?",
             choices: [
-              "Add 1 to x and store it back in x",
-              "Check if x equals 1",
-              "Print x plus 1",
-              "Subtract 1 from x"
+              "Voting early, in the days before election day",
+              "Filling in a survey before the campaign starts",
+              "A second-round vote after the main poll",
+              "Voting by phone"
             ],
-            answer: "Add 1 to x and store it back in x" },
-          { type: "mc", q: "What does this print?", code: "x = 5\nx += 3\nprint(x)",
-            choices: ["8", "5", "3", "53"], answer: "8" },
-          { type: "fill", q: "Multiply score by 2 using the short form.",
-            code: "score ___ 2", answer: "*=" },
-          { type: "mc", q: "What does this print?", code: "a, b = 1, 2\nprint(b)",
-            choices: ["2", "1", "1, 2", "Error"], answer: "2" },
-          { type: "mc", q: "What does this print?",
-            code: "name = \"Sam\"\nprint(f\"Hi {name}\")",
-            choices: ["Hi Sam", "Hi {name}", "Hi name", "Error"],
-            answer: "Hi Sam" },
-          { type: "fill", q: "Complete the f-string to print:  Score: 7",
-            code: "s = 7\nprint(f\"Score: ___\")", answer: "{s}" },
-          { type: "tokens", q: "Build a line that subtracts 1 from lives (short form).",
-            tokens: ["lives", "-=", "1"] }
+            answer: "Voting early, in the days before election day" },
+          { type: "mc", q: "A postal vote must be received by…",
+            choices: ["12 noon on election day", "Election day at 8pm", "The day after election day", "One week before election day"],
+            answer: "12 noon on election day" },
+          { type: "order", q: "Put the voting options in the order shown on vote.je.",
+            lines: ["In-person on election day", "Pre-poll (early) voting", "Postal vote"] },
+          { type: "tokens", q: "Build the polling-station hours.",
+            tokens: ["Open", "from", "8am", "to", "8pm"] }
         ]
       },
       {
-        id: "vars_l4", name: "Casting", emoji: "🔄",
+        id: "vote_l4", name: "What You Vote For", emoji: "🏛️",
         exercises: [
-          { type: "mc", q: "What type does input() always return?", codeChoices: true,
-            choices: ["str", "int", "float", "bool"], answer: "str" },
-          { type: "mc", q: "The user types 5. What does this print?",
-            code: "age = input()\nprint(age + 1)",
-            choices: ["Error", "6", "51", "5"], answer: "Error" },
-          { type: "mc", q: "Why do we often wrap input() in int()?",
-            choices: [
-              "Because input() returns a string, not a number",
-              "To make the program run faster",
-              "To round the number to a whole number",
-              "It is never actually needed"
-            ],
-            answer: "Because input() returns a string, not a number" },
-          { type: "fill", q: "Read a whole number typed by the user.",
-            code: "n = ___(input())", answer: "int" },
-          { type: "mc", q: "What does this print?", code: "print(float(\"2.5\") + 1)",
-            choices: ["3.5", "2.51", "Error", "3"], answer: "3.5" },
-          { type: "mc", q: "What does this print?", code: "print(int(3.9))",
-            choices: ["3", "4", "3.9", "Error"], answer: "3" },
-          { type: "mc", q: "Which converts the string \"3.5\" to a decimal number?", codeChoices: true,
-            choices: ["float(\"3.5\")", "int(\"3.5\")", "str(\"3.5\")", "round(\"3.5\")"],
-            answer: "float(\"3.5\")" },
-          { type: "tokens", q: "Convert score (a string of digits) to an integer.",
-            tokens: ["score", "=", "int(score)"] }
+          { type: "mc", q: "From the 7 June 2026 election, how many Senators do voters elect island-wide?",
+            choices: ["9", "12", "5", "0 — Senators were abolished"],
+            answer: "9" },
+          { type: "mc", q: "How many Deputies sit in the States from June 2026?",
+            choices: ["28", "37", "12", "49"], answer: "28" },
+          { type: "mc", q: "How many Connétables sit in the States?",
+            choices: ["12 — one per parish", "9 — one per constituency", "6 — elected island-wide", "It varies each election"],
+            answer: "12 — one per parish" },
+          { type: "mc", q: "Adding it up, how many elected Members does the States Assembly have?",
+            choices: ["49", "37", "60", "100"], answer: "49" },
+          { type: "fill", q: "From 2026, the States is 9 Senators + 28 Deputies + ___ Connétables.",
+            code: "Total elected = 9 + 28 + ___ = 49", answer: "12" },
+          { type: "mc", q: "When is Jersey's next general election?",
+            choices: ["Sunday 7 June 2026", "Wednesday 1 May 2026", "Thursday 4 July 2026", "Saturday 5 September 2026"],
+            answer: "Sunday 7 June 2026" }
         ]
       }
     ]
   },
   {
-    id: "select", title: "Selection", icon: "🤔",
+    id: "states", title: "The States Assembly", icon: "🏛️",
     color: "var(--blue)", colorD: "var(--blue-d)",
     levels: [
       {
-        id: "sel_l1", name: "if & else", emoji: "🔀",
+        id: "states_l1", name: "What It Is", emoji: "📜",
         exercises: [
-          { type: "mc", q: "Which keyword starts a condition?", codeChoices: true,
-            choices: ["if", "when", "check", "test"], answer: "if" },
-          { type: "fill", q: "Add the symbol that must end an if line.",
-            code: "age = 18\nif age >= 18___\n    print(\"Adult\")", answer: ":" },
-          { type: "mc", q: "How is the body of an if marked in Python?",
-            choices: ["By indentation", "By { curly braces }", "By semicolons", "By the word end"],
-            answer: "By indentation" },
-          { type: "mc", q: "What does this print?",
-            code: "x = 3\nif x > 5:\n    print(\"big\")\nelse:\n    print(\"small\")",
-            choices: ["small", "big", "3", "Nothing"], answer: "small" },
-          { type: "mc", q: "What does this print?",
-            code: "n = 10\nif n == 10:\n    print(\"yes\")",
-            choices: ["yes", "no", "10", "Nothing"], answer: "yes" },
-          { type: "order", q: "Arrange the code so it prints \"Pass\".",
-            lines: ["score = 70", "if score >= 50:", "    print(\"Pass\")"] },
-          { type: "mc", q: "Which line is WRONG?", codeChoices: true,
-            choices: ["if x > 5", "if x > 5:", "if (x > 5):", "if x >= 5:"],
-            answer: "if x > 5" }
-        ]
-      },
-      {
-        id: "sel_l2", name: "elif", emoji: "🪜",
-        exercises: [
-          { type: "mc", q: "What does elif mean?",
+          { type: "mc", q: "What is the States Assembly?",
             choices: [
-              "else if — try another condition",
-              "end of if — close the block",
-              "loop if — repeat the check",
-              "exit if — stop the program"
+              "Jersey's elected parliament",
+              "Jersey's main law court",
+              "A committee of UK MPs",
+              "The Council of Ministers only"
             ],
-            answer: "else if — try another condition" },
-          { type: "mc", q: "What does this print?",
-            code: "n = 0\nif n > 0:\n    print(\"positive\")\nelif n == 0:\n    print(\"zero\")\nelse:\n    print(\"negative\")",
-            choices: ["zero", "positive", "negative", "0"], answer: "zero" },
-          { type: "mc", q: "How many elif branches can you have?",
-            choices: ["As many as you want", "Exactly one", "Up to three", "None"],
-            answer: "As many as you want" },
-          { type: "mc", q: "What does this print?",
-            code: "g = 85\nif g >= 90:\n    print(\"A\")\nelif g >= 80:\n    print(\"B\")\nelif g >= 70:\n    print(\"C\")",
-            choices: ["B", "A", "C", "Nothing"], answer: "B" },
-          { type: "tokens", q: "Build the line that handles \"score is exactly 0\".",
-            tokens: ["elif", "score", "==", "0", ":"] },
-          { type: "mc", q: "If the first if condition is True, do later elifs run?",
-            choices: ["No, the rest is skipped", "Yes, all of them run",
-                      "Only the last one runs", "Only the else runs"],
-            answer: "No, the rest is skipped" },
-          { type: "order", q: "Arrange the code so it prints \"medium\" for n = 5.",
-            lines: ["n = 5", "if n > 10:", "    print(\"large\")", "elif n > 1:", "    print(\"medium\")", "else:", "    print(\"small\")"] }
+            answer: "Jersey's elected parliament" },
+          { type: "mc", q: "How many elected Members does the States Assembly have?",
+            choices: ["49", "12", "100", "650"], answer: "49" },
+          { type: "mc", q: "Where does the States Assembly sit?",
+            choices: ["In the States Chamber, St Helier", "At Westminster", "In each parish in turn", "In Government House"],
+            answer: "In the States Chamber, St Helier" },
+          { type: "fill", q: "Fill the total.",
+            code: "Elected Members of the States = ___", answer: "49" },
+          { type: "mc", q: "How long is a States Member's term?",
+            choices: ["4 years", "5 years", "1 year", "Until they retire"],
+            answer: "4 years" }
         ]
       },
       {
-        id: "sel_l3", name: "and / or / not", emoji: "🧠",
+        id: "states_l2", name: "Members & Roles", emoji: "👥",
         exercises: [
-          { type: "mc", q: "What does  True and False  give?",
-            choices: ["False", "True", "Error", "None"], answer: "False" },
-          { type: "mc", q: "What does  True or False  give?",
-            choices: ["True", "False", "Error", "None"], answer: "True" },
-          { type: "mc", q: "What does  not True  give?",
-            choices: ["False", "True", "not", "Error"], answer: "False" },
-          { type: "mc", q: "What does this print?", code: "print(3 > 2 and 2 > 5)",
-            choices: ["False", "True", "Error", "None"], answer: "False" },
-          { type: "mc", q: "What does this print?",
-            code: "age = 16\nif age >= 13 and age <= 19:\n    print(\"teen\")\nelse:\n    print(\"not teen\")",
-            choices: ["teen", "not teen", "16", "Error"], answer: "teen" },
-          { type: "fill", q: "Pass only if x is positive AND less than 100.",
-            code: "if x > 0 ___ x < 100:", answer: "and" },
-          { type: "mc", q: "What does this print?",
-            code: "x = 0\nif x > 0:\n    if x < 10:\n        print(\"small +\")\nelse:\n    print(\"zero or neg\")",
-            choices: ["zero or neg", "small +", "0", "Nothing"], answer: "zero or neg" }
-        ]
-      },
-      {
-        id: "sel_l4", name: "Ternary & Nesting", emoji: "🪺",
-        exercises: [
-          { type: "mc", q: "What does this print?",
-            code: "x = 7\nprint(\"even\" if x % 2 == 0 else \"odd\")",
-            choices: ["odd", "even", "7", "Error"], answer: "odd" },
-          { type: "mc", q: "What does  a if c else b  do?",
+          { type: "mc", q: "From 2026, which three kinds of elected Members make up the States?",
             choices: [
-              "Gives a when c is True, otherwise b",
-              "Always gives a",
-              "Loops while c is True",
-              "Defines a function"
+              "Senators, Deputies, Connétables",
+              "MPs, Peers, Bishops",
+              "Mayors, Councillors, Magistrates",
+              "Senators, Centeniers, Jurats"
             ],
-            answer: "Gives a when c is True, otherwise b" },
-          { type: "fill", q: "Set status to \"pass\" when score >= 50, else \"fail\".",
-            code: "status = \"pass\" if score >= 50 ___ \"fail\"", answer: "else" },
-          { type: "mc", q: "What does this print?",
-            code: "age = 20\nmsg = \"adult\" if age >= 18 else \"minor\"\nprint(msg)",
-            choices: ["adult", "minor", "20", "True"], answer: "adult" },
-          { type: "mc", q: "What does this print?",
-            code: "x = 8\nif x > 0:\n    if x > 5:\n        print(\"big positive\")\n    else:\n        print(\"small positive\")",
-            choices: ["big positive", "small positive", "Nothing", "Error"], answer: "big positive" },
-          { type: "tokens", q: "Build the value: \"A\" when mark is at least 90, otherwise \"B\".",
-            tokens: ["\"A\"", "if", "mark", ">=", "90", "else", "\"B\""] },
-          { type: "order", q: "Arrange so it prints \"VIP\" only when member is True and points are over 100.",
-            lines: ["member = True", "points = 150", "if member:", "    if points > 100:", "        print(\"VIP\")"] }
+            answer: "Senators, Deputies, Connétables" },
+          { type: "mc", q: "Senators are elected…",
+            choices: ["Island-wide, by all voters", "Only by their own parish", "Only by other Members", "Only by the Bailiff"],
+            answer: "Island-wide, by all voters" },
+          { type: "mc", q: "A Connétable also serves as…",
+            choices: ["Head of their parish", "President of the Royal Court", "Chief Minister", "Attorney General"],
+            answer: "Head of their parish" },
+          { type: "mc", q: "Which of these does NOT have a vote in the States Assembly?",
+            choices: ["The Bailiff", "A Deputy", "A Senator", "A Connétable"],
+            answer: "The Bailiff" },
+          { type: "mc", q: "Which non-elected officer represents the Sovereign in Jersey?",
+            choices: ["The Lieutenant-Governor", "The Bailiff", "The Dean of Jersey", "The Chief Minister"],
+            answer: "The Lieutenant-Governor" },
+          { type: "tokens", q: "Build the three kinds of elected Member.",
+            tokens: ["Senators", "Deputies", "Connétables"] }
+        ]
+      },
+      {
+        id: "states_l3", name: "Sittings & The Bailiff", emoji: "⚖️",
+        exercises: [
+          { type: "mc", q: "Who presides over (chairs) States sittings?",
+            choices: ["The Bailiff", "The Chief Minister", "The Lieutenant-Governor", "The Greffier"],
+            answer: "The Bailiff" },
+          { type: "mc", q: "The Bailiff is also head of which body?",
+            choices: ["The Royal Court", "The Magistrate's Court", "The Council of Ministers", "The Honorary Police"],
+            answer: "The Royal Court" },
+          { type: "mc", q: "When do States sittings usually start?",
+            choices: ["Tuesdays, roughly every three weeks", "Every Monday morning", "Once a year, in May", "Only when the Chief Minister calls one"],
+            answer: "Tuesdays, roughly every three weeks" },
+          { type: "mc", q: "Can a member of the public watch a States sitting?",
+            choices: ["Yes — the public gallery is open during sittings", "No — sittings are private", "Only by special invitation from the Bailiff", "Only journalists may attend"],
+            answer: "Yes — the public gallery is open during sittings" },
+          { type: "fill", q: "Complete the sentence.",
+            code: "The Bailiff presides over both the States and the ___ Court.", answer: "Royal" }
+        ]
+      },
+      {
+        id: "states_l4", name: "The Government", emoji: "🧑‍💼",
+        exercises: [
+          { type: "mc", q: "Who leads Jersey's government?",
+            choices: ["The Chief Minister", "The Bailiff", "The Lieutenant-Governor", "The Dean of Jersey"],
+            answer: "The Chief Minister" },
+          { type: "mc", q: "What is the Council of Ministers?",
+            choices: [
+              "The executive — Ministers running government departments",
+              "All 49 States Members combined",
+              "A panel of judges",
+              "The 12 Connétables meeting together"
+            ],
+            answer: "The executive — Ministers running government departments" },
+          { type: "mc", q: "Who chooses Jersey's Ministers?",
+            choices: [
+              "The States Assembly elects them from its Members",
+              "The UK government appoints them",
+              "Voters elect them directly",
+              "The Bailiff appoints them"
+            ],
+            answer: "The States Assembly elects them from its Members" },
+          { type: "mc", q: "Can someone be Chief Minister without being an elected Member?",
+            choices: ["No — they must be a States Member", "Yes — anyone can be chosen", "Only if the Bailiff agrees", "Only if they are a former Senator"],
+            answer: "No — they must be a States Member" },
+          { type: "tokens", q: "Build the title of Jersey's head of government.",
+            tokens: ["The", "Chief", "Minister"] },
+          { type: "order", q: "Order these from broadest to narrowest body.",
+            lines: ["States Assembly (49 elected Members)", "Council of Ministers (the executive)", "The Chief Minister (one person)"] }
         ]
       }
     ]
   },
   {
-    id: "loops", title: "Loops", icon: "🔁",
+    id: "parishes", title: "The 12 Parishes", icon: "⛪",
     color: "var(--purple)", colorD: "var(--purple-d)",
     levels: [
       {
-        id: "loops_l1", name: "for & range", emoji: "🔁",
+        id: "parishes_l1", name: "The 12 Parishes", emoji: "🗺️",
         exercises: [
-          { type: "mc", q: "How many times does this loop run?",
-            code: "for i in range(5):\n    print(\"Hi\")",
-            choices: ["5", "4", "6", "1"], answer: "5" },
-          { type: "fill", q: "Make this loop repeat exactly 4 times.",
-            code: "for i in range(___):\n    print(\"Go\")", answer: "4" },
-          { type: "mc", q: "What numbers does this print, in order?",
-            code: "for i in range(3):\n    print(i)",
-            choices: ["0, 1, 2", "1, 2, 3", "0, 1, 2, 3", "3"], answer: "0, 1, 2" },
-          { type: "mc", q: "What numbers does range(2, 5) produce?",
-            choices: ["2, 3, 4", "2, 3, 4, 5", "3, 4, 5", "2, 5"], answer: "2, 3, 4" },
-          { type: "order", q: "Arrange the code to print 0, 1 and 2.",
-            lines: ["for i in range(3):", "    print(i)"] },
-          { type: "tokens", q: "Build a loop header that repeats 10 times.",
-            tokens: ["for", "i", "in", "range", "(", "10", ")", ":"] },
-          { type: "mc", q: "What value does i hold on the FIRST pass of  for i in range(3)?",
-            choices: ["0", "1", "3", "i"], answer: "0" }
-        ]
-      },
-      {
-        id: "loops_l2", name: "while & break", emoji: "♻️",
-        exercises: [
-          { type: "mc", q: "A while loop keeps repeating...",
-            choices: ["while its condition is True", "exactly one time",
-                      "a random number of times", "only when the file is saved"],
-            answer: "while its condition is True" },
-          { type: "mc", q: "What numbers does this print, in order?",
-            code: "n = 3\nwhile n > 0:\n    print(n)\n    n = n - 1",
-            choices: ["3, 2, 1", "3, 2, 1, 0", "1, 2, 3", "0, 1, 2"], answer: "3, 2, 1" },
-          { type: "fill", q: "Keep looping while count is below 5.",
-            code: "count = 0\nwhile count ___ 5:\n    count += 1", answer: "<" },
-          { type: "mc", q: "What is wrong with this loop?",
-            code: "n = 1\nwhile n > 0:\n    print(n)",
-            choices: ["It never stops (infinite loop)", "It has a syntax error",
-                      "It prints nothing", "It runs only once"],
-            answer: "It never stops (infinite loop)" },
-          { type: "mc", q: "Which keyword stops a loop early?", codeChoices: true,
-            choices: ["break", "stop", "exit", "end"], answer: "break" },
-          { type: "mc", q: "What does this print?",
-            code: "for i in range(10):\n    if i == 3:\n        break\n    print(i)",
-            choices: ["0, 1, 2", "0, 1, 2, 3", "3", "Nothing"], answer: "0, 1, 2" },
-          { type: "order", q: "Arrange the code to count down: 2, then 1.",
-            lines: ["n = 2", "while n > 0:", "    print(n)", "    n = n - 1"] }
-        ]
-      },
-      {
-        id: "loops_l3", name: "continue & nesting", emoji: "🧩",
-        exercises: [
-          { type: "mc", q: "What does  continue  do inside a loop?",
+          { type: "mc", q: "How many parishes does Jersey have?",
+            choices: ["12", "9", "6", "24"], answer: "12" },
+          { type: "mc", q: "Which of these is NOT a Jersey parish?",
+            choices: ["St Albans", "St Helier", "St Brelade", "Grouville"],
+            answer: "St Albans" },
+          { type: "mc", q: "Which parish contains the island's capital?",
+            choices: ["St Helier", "St Saviour", "Trinity", "St Ouen"],
+            answer: "St Helier" },
+          { type: "mc", q: "Which of these is a Jersey parish?",
+            choices: ["Trinity", "St Andrews", "St Paul", "Westminster"],
+            answer: "Trinity" },
+          { type: "mc", q: "Most Jersey parishes share a common naming style. Which one?",
             choices: [
-              "Skip to the next iteration of the loop",
-              "Stop the loop completely",
-              "Restart the loop from the very beginning",
-              "Pause the loop for 1 second"
+              "Named after a saint (e.g. St Mary, St Peter)",
+              "Numbered (Parish 1, Parish 2…)",
+              "Named after rivers",
+              "Named after their Connétable"
             ],
-            answer: "Skip to the next iteration of the loop" },
-          { type: "mc", q: "What does this print?",
-            code: "for i in range(4):\n    if i == 2:\n        continue\n    print(i)",
-            choices: ["0, 1, 3", "0, 1, 2, 3", "2", "0, 1"], answer: "0, 1, 3" },
-          { type: "mc", q: "How many times does the inner print run?",
-            code: "for i in range(3):\n    for j in range(2):\n        print(i, j)",
-            choices: ["6", "5", "3", "2"], answer: "6" },
-          { type: "mc", q: "What is the LAST line printed?",
-            code: "for i in range(3):\n    for j in range(2):\n        print(i, j)",
-            choices: ["2 1", "3 2", "2 2", "1 1"], answer: "2 1" },
-          { type: "mc", q: "What does this print?",
-            code: "total = 0\nfor i in range(1, 4):\n    total += i\nprint(total)",
-            choices: ["6", "3", "10", "4"], answer: "6" },
-          { type: "fill", q: "Add each number to total inside the loop.",
-            code: "total = 0\nfor n in range(5):\n    total ___ n", answer: "+=" },
-          { type: "order", q: "Arrange the code to print the total of 1+2+3.",
-            lines: ["total = 0", "for i in range(1, 4):", "    total += i", "print(total)"] }
+            answer: "Named after a saint (e.g. St Mary, St Peter)" },
+          { type: "tokens", q: "Build the name of Jersey's capital parish.",
+            tokens: ["St", "Helier"] }
         ]
       },
       {
-        id: "loops_l4", name: "Patterns & Steps", emoji: "📈",
+        id: "parishes_l2", name: "The Connétable", emoji: "🎖️",
         exercises: [
-          { type: "mc", q: "What numbers does range(0, 10, 2) produce?",
-            choices: ["0, 2, 4, 6, 8", "0, 2, 4, 6, 8, 10", "2, 4, 6, 8", "0, 1, 2 ... 10"],
-            answer: "0, 2, 4, 6, 8" },
-          { type: "mc", q: "What does count end up as?",
-            code: "count = 0\nfor n in range(10):\n    if n % 3 == 0:\n        count += 1\nprint(count)",
-            choices: ["4", "3", "9", "10"], answer: "4" },
-          { type: "mc", q: "What numbers does this print, in order?",
-            code: "for i in range(5, 0, -1):\n    print(i)",
-            choices: ["5, 4, 3, 2, 1", "1, 2, 3, 4, 5", "5, 4, 3, 2, 1, 0", "0, 1, 2, 3, 4"],
-            answer: "5, 4, 3, 2, 1" },
-          { type: "fill", q: "Loop over every SECOND number from 0 up to (not including) 20.",
-            code: "for i in range(0, 20, ___):\n    print(i)", answer: "2" },
-          { type: "mc", q: "What does this print?",
-            code: "biggest = 0\nfor n in range(1, 6):\n    if n > biggest:\n        biggest = n\nprint(biggest)",
-            choices: ["5", "1", "6", "15"], answer: "5" },
-          { type: "tokens", q: "Build a loop header that counts 10, 20, 30 ... up to 50.",
-            tokens: ["for", "i", "in", "range", "(", "10", ",", "60", ",", "10", ")", ":"] },
-          { type: "order", q: "Arrange the code to print the total of 0+2+4+6+8.",
-            lines: ["total = 0", "for i in range(0, 10, 2):", "    total += i", "print(total)"] }
+          { type: "mc", q: "What does the Connétable do?",
+            choices: [
+              "Heads the parish AND sits in the States Assembly",
+              "Acts as the parish judge only",
+              "Runs only the parish church",
+              "Represents the parish at UK Parliament"
+            ],
+            answer: "Heads the parish AND sits in the States Assembly" },
+          { type: "mc", q: "How many Connétables are there in total?",
+            choices: ["12 — one per parish", "9 — one per constituency", "1 — for the whole island", "It changes each year"],
+            answer: "12 — one per parish" },
+          { type: "mc", q: "To stand as Connétable, where (usually) must you live?",
+            choices: [
+              "In the parish you wish to represent",
+              "Anywhere in Jersey",
+              "In St Helier",
+              "In any Crown Dependency"
+            ],
+            answer: "In the parish you wish to represent" },
+          { type: "mc", q: "Which Jersey parish has a special rule allowing rate-payers (not just residents) to stand as Connétable?",
+            choices: ["St Helier", "St Brelade", "Trinity", "St Mary"],
+            answer: "St Helier" },
+          { type: "fill", q: "Complete the title.",
+            code: "The head of a Jersey parish is the ___.", answer: "Connétable" }
+        ]
+      },
+      {
+        id: "parishes_l3", name: "Parish Assemblies", emoji: "🪑",
+        exercises: [
+          { type: "mc", q: "What is a Parish Assembly?",
+            choices: [
+              "A meeting where parishioners decide local matters",
+              "A church service",
+              "An island-wide vote",
+              "A court hearing"
+            ],
+            answer: "A meeting where parishioners decide local matters" },
+          { type: "mc", q: "Who chairs a Parish Assembly?",
+            choices: ["The Connétable", "The Bailiff", "The Dean", "The Centenier"],
+            answer: "The Connétable" },
+          { type: "mc", q: "Honorary Police officers are usually elected…",
+            choices: [
+              "At a Parish Assembly",
+              "By the States Assembly",
+              "By the Bailiff",
+              "By the Lieutenant-Governor"
+            ],
+            answer: "At a Parish Assembly" },
+          { type: "mc", q: "Which body coordinates the work of all 12 parishes?",
+            choices: ["The Comité des Connétables", "The Council of Ministers", "The Royal Court", "The Magistrate's Court"],
+            answer: "The Comité des Connétables" },
+          { type: "tokens", q: "Build the name of the body that coordinates parish work.",
+            tokens: ["Comité", "des", "Connétables"] }
+        ]
+      },
+      {
+        id: "parishes_l4", name: "Honorary Police", emoji: "🛡️",
+        exercises: [
+          { type: "mc", q: "Which Honorary Police rank is the most senior?",
+            choices: ["Centenier", "Vingtenier", "Constable's Officer", "Sergeant"],
+            answer: "Centenier" },
+          { type: "mc", q: "Is the Honorary Police paid?",
+            choices: ["No — it is a voluntary service", "Yes — by the parish", "Yes — by the States", "Only the Centeniers are paid"],
+            answer: "No — it is a voluntary service" },
+          { type: "mc", q: "Who can charge a suspect at police HQ and present cases in the Magistrate's Court?",
+            choices: ["Only a Centenier", "Any Honorary Police officer", "Only the Bailiff", "Only a States Member"],
+            answer: "Only a Centenier" },
+          { type: "mc", q: "What is a \"Parish Hall Enquiry\"?",
+            choices: [
+              "A meeting where a Centenier deals with a minor offence outside court",
+              "A States Assembly debate held in a parish",
+              "A church service of remembrance",
+              "A planning application hearing"
+            ],
+            answer: "A meeting where a Centenier deals with a minor offence outside court" },
+          { type: "order", q: "Order the Honorary Police ranks from senior to junior.",
+            lines: ["Centenier", "Vingtenier", "Constable's Officer"] },
+          { type: "tokens", q: "Build the three Honorary Police ranks (senior first).",
+            tokens: ["Centenier", "Vingtenier", "Constable's Officer"] }
         ]
       }
     ]
   },
   {
-    id: "funcs", title: "Functions", icon: "🛠️",
+    id: "youth", title: "Youth Services", icon: "🧑‍🎓",
     color: "var(--orange)", colorD: "var(--orange-d)",
     levels: [
       {
-        id: "funcs_l1", name: "Define & Call", emoji: "🧰",
+        id: "youth_l1", name: "Jersey Youth Service", emoji: "🏠",
         exercises: [
-          { type: "mc", q: "Which keyword defines a function?", codeChoices: true,
-            choices: ["def", "function", "func", "define"], answer: "def" },
-          { type: "fill", q: "Complete the definition of a function called hello.",
-            code: "___ hello():\n    print(\"Hello\")", answer: "def" },
-          { type: "mc", q: "What does this code print?",
-            code: "def shout():\n    print(\"HEY\")\nshout()",
-            choices: ["HEY", "Nothing", "shout", "Error"], answer: "HEY" },
-          { type: "order", q: "Arrange the code to define greet, then call it.",
-            lines: ["def greet():", "    print(\"Hi!\")", "greet()"] },
-          { type: "tokens", q: "Write a line that calls a function named start.",
-            tokens: ["start", "(", ")"] },
-          { type: "mc", q: "When does the code INSIDE a function run?",
-            choices: ["When the function is called", "When the file is saved",
-                      "As soon as Python starts", "Never"],
-            answer: "When the function is called" },
-          { type: "mc", q: "How many times is \"go\" printed?",
-            code: "def run():\n    print(\"go\")\nrun()\nrun()",
-            choices: ["2", "1", "0", "3"], answer: "2" }
+          { type: "mc", q: "Where is the main base of the Jersey Youth Service?",
+            choices: ["St James Centre, St Helier", "Government House", "The Royal Court", "Fort Regent"],
+            answer: "St James Centre, St Helier" },
+          { type: "mc", q: "The Jersey Youth Service is mainly aimed at…",
+            choices: [
+              "Young people in Jersey",
+              "Honorary Police officers",
+              "Elected States Members",
+              "Tourists"
+            ],
+            answer: "Young people in Jersey" },
+          { type: "mc", q: "Activities are organised around themes such as…",
+            choices: [
+              "Health, environment, identity, transitions",
+              "Tax law and accounting only",
+              "Royal Court procedure",
+              "Driving lessons only"
+            ],
+            answer: "Health, environment, identity, transitions" },
+          { type: "fill", q: "Complete the base address.",
+            code: "St James ___, St James Street, St Helier", answer: "Centre" },
+          { type: "mc", q: "Which of these is one of the Youth Service curriculum themes?",
+            choices: ["Global citizenship", "Property law", "Banking compliance", "Cycling proficiency only"],
+            answer: "Global citizenship" }
         ]
       },
       {
-        id: "funcs_l2", name: "Parameters & return", emoji: "📥",
+        id: "youth_l2", name: "YES — Youth Enquiry Service", emoji: "❓",
         exercises: [
-          { type: "mc", q: "A value you pass into a function is called a...",
-            choices: ["argument", "loop", "backdrop", "comment"], answer: "argument" },
-          { type: "fill", q: "Give this function a parameter called name.",
-            code: "def greet(___):\n    print(\"Hi\", name)", answer: "name" },
-          { type: "mc", q: "What does this print?",
-            code: "def add(a, b):\n    return a + b\nprint(add(2, 3))",
-            choices: ["5", "23", "a + b", "Error"], answer: "5" },
-          { type: "mc", q: "What does the return keyword do?",
-            choices: ["Sends a value back from the function", "Prints a value on screen",
-                      "Stops the whole program", "Defines a new function"],
-            answer: "Sends a value back from the function" },
-          { type: "mc", q: "What does this print?",
-            code: "def double(x):\n    return x * 2\nprint(double(4))",
-            choices: ["8", "6", "4", "42"], answer: "8" },
-          { type: "tokens", q: "Build a statement that returns the value total.",
-            tokens: ["return", "total"] },
-          { type: "order", q: "Arrange the code to define square, then print square(3).",
-            lines: ["def square(n):", "    return n * n", "print(square(3))"] }
+          { type: "mc", q: "What does YES stand for?",
+            choices: ["Youth Enquiry Service", "Young Earners' Society", "Youth Election Service", "Youth Education Scheme"],
+            answer: "Youth Enquiry Service" },
+          { type: "mc", q: "YES is for people aged…",
+            choices: ["14 to 25", "16 to 18", "11 to 19", "18 to 30"],
+            answer: "14 to 25" },
+          { type: "mc", q: "Is the YES counselling service free?",
+            choices: ["Yes — free and confidential", "No — pay per session", "Only for under-16s", "Only for those on Income Support"],
+            answer: "Yes — free and confidential" },
+          { type: "mc", q: "Where is YES based?",
+            choices: ["The Link, Eagle House, La Colomberie", "States Chamber, St Helier", "Howard Davis Farm", "Fort Regent"],
+            answer: "The Link, Eagle House, La Colomberie" },
+          { type: "mc", q: "Which of these is NOT something YES helps with?",
+            choices: ["Royal Court judgments", "Bereavement", "Housing", "Sexual health"],
+            answer: "Royal Court judgments" },
+          { type: "fill", q: "Complete the age range.",
+            code: "YES supports young people aged 14 to ___.", answer: "25" },
+          { type: "tokens", q: "Build the full name of YES.",
+            tokens: ["Youth", "Enquiry", "Service"] }
         ]
       },
       {
-        id: "funcs_l3", name: "Defaults & Scope", emoji: "🎯",
+        id: "youth_l3", name: "Centres & Themes", emoji: "🎯",
         exercises: [
-          { type: "mc", q: "What does this print?",
-            code: "def greet(name=\"friend\"):\n    print(\"Hi\", name)\ngreet()",
-            choices: ["Hi friend", "Hi name", "Hi", "Error"], answer: "Hi friend" },
-          { type: "mc", q: "What does this print?",
-            code: "def add(a, b=10):\n    return a + b\nprint(add(5))",
-            choices: ["15", "10", "5", "Error"], answer: "15" },
-          { type: "mc", q: "What does this print?",
-            code: "def add(a, b=10):\n    return a + b\nprint(add(5, 2))",
-            choices: ["7", "15", "12", "Error"], answer: "7" },
-          { type: "fill", q: "Give count a default value of 0.",
-            code: "def tally(count=___):\n    print(count)", answer: "0" },
-          { type: "mc", q: "Variables created INSIDE a function are...",
-            choices: ["only usable inside that function (local)",
-                      "available everywhere in the program",
-                      "automatically saved to a file",
-                      "always equal to None"],
-            answer: "only usable inside that function (local)" },
-          { type: "mc", q: "What happens here?",
-            code: "def f():\n    x = 5\nf()\nprint(x)",
-            choices: ["Error: x is not defined outside the function",
-                      "Prints 5", "Prints None", "Prints 0"],
-            answer: "Error: x is not defined outside the function" },
-          { type: "tokens", q: "Call greet with the name \"Sam\" and the age 12.",
-            tokens: ["greet", "(", "\"Sam\"", ",", "12", ")"] }
+          { type: "mc", q: "Which of these is a curriculum theme used by the Youth Service?",
+            choices: ["Financial wellbeing", "Property conveyancing", "Audit standards", "Court procedure"],
+            answer: "Financial wellbeing" },
+          { type: "mc", q: "\"Transitions\" as a Youth Service theme is about…",
+            choices: [
+              "Moving through key life stages (e.g. school, work, independence)",
+              "Public transport timetables",
+              "Switching political party",
+              "Train networks"
+            ],
+            answer: "Moving through key life stages (e.g. school, work, independence)" },
+          { type: "mc", q: "Which of these is also a Youth Service theme?",
+            choices: ["Culture and heritage", "Currency exchange", "Fishing quotas", "Insolvency law"],
+            answer: "Culture and heritage" },
+          { type: "mc", q: "Which of these is a Jersey youth centre?",
+            choices: ["Ann Street Youth Centre", "Whitehall Youth Office", "London Citizens' Hub", "Brussels Youth Square"],
+            answer: "Ann Street Youth Centre" },
+          { type: "tokens", q: "Build a Youth Service theme.",
+            tokens: ["Health", "and", "wellbeing"] }
         ]
       },
       {
-        id: "funcs_l4", name: "Built-in Functions", emoji: "📚",
+        id: "youth_l4", name: "Getting Involved", emoji: "🤝",
         exercises: [
-          { type: "mc", q: "What does this print?", code: "print(len(\"hello\"))",
-            choices: ["5", "4", "6", "hello"], answer: "5" },
-          { type: "mc", q: "What does this print?", code: "print(max(3, 8, 5))",
-            choices: ["8", "3", "5", "16"], answer: "8" },
-          { type: "mc", q: "What does this print?", code: "print(min(4, 2, 9))",
-            choices: ["2", "4", "9", "15"], answer: "2" },
-          { type: "mc", q: "What does this print?", code: "print(abs(-7))",
-            choices: ["7", "-7", "0", "14"], answer: "7" },
-          { type: "mc", q: "What does this print?", code: "print(round(3.7))",
-            choices: ["4", "3", "3.7", "3.5"], answer: "4" },
-          { type: "fill", q: "Find how many characters are in the word stored in name.",
-            code: "n = ___(name)", answer: "len" },
-          { type: "tokens", q: "Build a call that finds the largest of a, b and c.",
-            tokens: ["max", "(", "a", ",", "b", ",", "c", ")"] }
+          { type: "mc", q: "If a young person wants confidential help, where can they self-refer?",
+            choices: ["YES — Youth Enquiry Service", "The Royal Court", "The Comité des Connétables", "The States Greffe"],
+            answer: "YES — Youth Enquiry Service" },
+          { type: "mc", q: "Youth Service activities are best described as…",
+            choices: [
+              "Free or low-cost, run by youth workers around shared themes",
+              "Paid private tuition only",
+              "Court-ordered rehabilitation programmes only",
+              "School lessons during the day only"
+            ],
+            answer: "Free or low-cost, run by youth workers around shared themes" },
+          { type: "mc", q: "Which voting-age rule connects directly to youth participation?",
+            choices: [
+              "16-year-olds can vote in Jersey elections",
+              "Only over-21s can vote",
+              "Voting age is 25",
+              "You must be in education to vote"
+            ],
+            answer: "16-year-olds can vote in Jersey elections" },
+          { type: "mc", q: "Which body in the States looks at policy and can hold public hearings young people can attend?",
+            choices: ["A Scrutiny Panel", "The Royal Court", "The Comité des Connétables", "The Magistrate's Court"],
+            answer: "A Scrutiny Panel" },
+          { type: "tokens", q: "Build the practical age fact.",
+            tokens: ["Vote", "from", "age", "16"] }
         ]
       }
     ]
   },
   {
-    id: "strings", title: "String Manipulation", icon: "🧵",
+    id: "candidate", title: "Standing as a Candidate", icon: "🎤", advanced: true,
     color: "var(--red)", colorD: "var(--red-d)",
-    advanced: true,
     levels: [
       {
-        id: "str_l1", name: "Build & Index", emoji: "🔤",
+        id: "candidate_l1", name: "Who Can Stand", emoji: "🪪",
         exercises: [
-          { type: "mc", q: "What does this print?", code: "print(\"Hi\" + \"!\")",
-            choices: ["Hi!", "Hi !", "\"Hi!\"", "Error"], answer: "Hi!" },
-          { type: "mc", q: "What does this print?", code: "print(len(\"hello\"))",
-            choices: ["5", "4", "6", "hello"], answer: "5" },
-          { type: "mc", q: "What does this print?",
-            code: "s = \"Python\"\nprint(s[0])",
-            choices: ["P", "Python", "y", "0"], answer: "P" },
-          { type: "mc", q: "What does this print?",
-            code: "s = \"Python\"\nprint(s[-1])",
-            choices: ["n", "P", "Python", "Error"], answer: "n" },
-          { type: "fill", q: "Print the first letter of word.",
-            code: "word = \"cat\"\nprint(word[___])", answer: "0" },
-          { type: "mc", q: "What does this print?", code: "print(\"x\" * 3)",
-            choices: ["xxx", "3", "x*3", "x x x"], answer: "xxx" },
-          { type: "tokens", q: "Build a line that joins greeting and name with a space between them.",
-            tokens: ["print", "(", "greeting", "+", "\" \"", "+", "name", ")"] }
+          { type: "mc", q: "To stand as Connétable of a parish, you must (usually) be…",
+            choices: [
+              "Resident in that parish",
+              "Resident anywhere in Jersey",
+              "A British citizen only",
+              "A current States Member"
+            ],
+            answer: "Resident in that parish" },
+          { type: "mc", q: "Which parish has a special rule letting rate-payers (not just residents) stand as Connétable?",
+            choices: ["St Helier", "St Brelade", "Grouville", "Trinity"],
+            answer: "St Helier" },
+          { type: "mc", q: "Can the same person stand for more than one role at the same election?",
+            choices: ["No — one role only", "Yes — up to two roles", "Yes — any number of roles", "Only if the Bailiff agrees"],
+            answer: "No — one role only" },
+          { type: "mc", q: "Senators are elected by…",
+            choices: ["Voters across the whole island", "Only Members of the States", "Only their parish", "Only the Council of Ministers"],
+            answer: "Voters across the whole island" }
         ]
       },
       {
-        id: "str_l2", name: "Slicing", emoji: "✂️",
+        id: "candidate_l2", name: "The Nomination", emoji: "📝",
         exercises: [
-          { type: "mc", q: "What does this print?", code: "print(\"Python\"[0:3])",
-            choices: ["Pyt", "Pyth", "yth", "Python"], answer: "Pyt" },
-          { type: "mc", q: "What does this print?", code: "print(\"hello\"[2:])",
-            choices: ["llo", "hel", "ll", "lo"], answer: "llo" },
-          { type: "mc", q: "What does this print?", code: "print(\"hello\"[:3])",
-            choices: ["hel", "llo", "lo", "h"], answer: "hel" },
-          { type: "fill", q: "Slice to get \"ell\" from \"hello\".",
-            code: "print(\"hello\"[___])", answer: "1:4" },
-          { type: "mc", q: "What does this print?", code: "print(\"abcdef\"[-2:])",
-            choices: ["ef", "de", "f", "ab"], answer: "ef" },
-          { type: "mc", q: "What does this print?", code: "print(\"abc\"[::-1])",
-            choices: ["cba", "abc", "c", "Error"], answer: "cba" },
-          { type: "mc", q: "What does this print?",
-            code: "s = \"data\"\nprint(s[1:3])",
-            choices: ["at", "dat", "da", "ta"], answer: "at" }
+          { type: "mc", q: "How many eligible voters must support a nomination?",
+            choices: ["10 (1 proposer + 9 seconders)", "5", "20", "100"],
+            answer: "10 (1 proposer + 9 seconders)" },
+          { type: "mc", q: "Where are 2026 nominations submitted?",
+            choices: ["Morier House", "States Chamber", "Royal Court", "Government House"],
+            answer: "Morier House" },
+          { type: "mc", q: "How many nomination forms can one candidate submit?",
+            choices: ["One — for a single role", "Up to three", "One per parish", "Unlimited"],
+            answer: "One — for a single role" },
+          { type: "fill", q: "Complete the supporter rule.",
+            code: "1 proposer + ___ seconders = 10 supporters", answer: "9" },
+          { type: "tokens", q: "Build the supporter total.",
+            tokens: ["10", "eligible", "voters"] }
         ]
       },
       {
-        id: "str_l3", name: "Methods & in", emoji: "🛠️",
+        id: "candidate_l3", name: "Terms & Duties", emoji: "📅",
         exercises: [
-          { type: "mc", q: "What does this print?", code: "print(\"hello\".upper())",
-            choices: ["HELLO", "hello", "Hello", "Error"], answer: "HELLO" },
-          { type: "mc", q: "What does this print?", code: "print(\"HI\".lower())",
-            choices: ["hi", "HI", "Hi", "Error"], answer: "hi" },
-          { type: "mc", q: "What does this print?", code: "print(\"  hi  \".strip())",
-            choices: ["hi", "  hi  ", "hi  ", "  hi"], answer: "hi" },
-          { type: "mc", q: "What does this print?",
-            code: "print(\"a,b,c\".split(\",\"))",
-            choices: ["['a', 'b', 'c']", "abc", "a b c", "Error"],
-            answer: "['a', 'b', 'c']" },
-          { type: "mc", q: "What does this print?",
-            code: "print(\"-\".join([\"a\", \"b\", \"c\"]))",
-            choices: ["a-b-c", "abc", "['a','b','c']", "a, b, c"],
-            answer: "a-b-c" },
-          { type: "mc", q: "What does this print?",
-            code: "print(\"cat\" in \"concatenate\")",
-            choices: ["True", "False", "cat", "Error"], answer: "True" },
-          { type: "fill", q: "Replace \"Hi\" with \"Hello\" in the greeting.",
-            code: "g = \"Hi Sam\"\nprint(g.replace(\"Hi\", ___))",
-            answer: "\"Hello\"", accept: ["'Hello'"] }
+          { type: "mc", q: "How long does an elected States Member serve before the next general election?",
+            choices: ["4 years", "5 years", "2 years", "Life"],
+            answer: "4 years" },
+          { type: "mc", q: "Once elected, a Connétable also chairs…",
+            choices: ["Their Parish Assembly", "The Royal Court", "The Council of Ministers", "The Comité des Connétables — every meeting"],
+            answer: "Their Parish Assembly" },
+          { type: "mc", q: "Who can elect a States Member to be a Minister?",
+            choices: ["The States Assembly", "All voters in a referendum", "The Lieutenant-Governor", "The Bailiff alone"],
+            answer: "The States Assembly" },
+          { type: "order", q: "Order the candidate's journey.",
+            lines: ["Decide which role to stand for", "Get 10 supporters and submit nomination", "Campaign", "Election day", "Take seat if elected"] }
         ]
       }
     ]
   },
   {
-    id: "lists", title: "Lists", icon: "📋",
+    id: "crown", title: "Crown Dependency & Rights", icon: "👑", advanced: true,
     color: "var(--teal)", colorD: "var(--teal-d)",
-    advanced: true,
     levels: [
       {
-        id: "lists_l1", name: "Create & Index", emoji: "📋",
+        id: "crown_l1", name: "A Crown Dependency", emoji: "🏝️",
         exercises: [
-          { type: "mc", q: "What does this print?",
-            code: "nums = [1, 2, 3]\nprint(nums[0])",
-            choices: ["1", "0", "2", "[1, 2, 3]"], answer: "1" },
-          { type: "mc", q: "What does this print?", code: "print(len([4, 5, 6]))",
-            choices: ["3", "4", "15", "6"], answer: "3" },
-          { type: "mc", q: "What does this print?",
-            code: "colors = [\"red\", \"green\", \"blue\"]\nprint(colors[2])",
-            choices: ["blue", "green", "red", "2"], answer: "blue" },
-          { type: "mc", q: "Which creates a list of three numbers?", codeChoices: true,
-            choices: ["[1, 2, 3]", "(1, 2, 3)", "{1, 2, 3}", "<1, 2, 3>"],
-            answer: "[1, 2, 3]" },
-          { type: "mc", q: "What does this print?",
-            code: "letters = [\"a\", \"b\", \"c\"]\nprint(letters[-1])",
-            choices: ["c", "a", "b", "Error"], answer: "c" },
-          { type: "mc", q: "What is the index of the FIRST item in a list?",
-            choices: ["0", "1", "-1", "first"], answer: "0" },
-          { type: "fill", q: "Get the second item from scores.",
-            code: "scores = [10, 20, 30]\nprint(scores[___])", answer: "1" }
+          { type: "mc", q: "Jersey is best described as…",
+            choices: [
+              "A Crown Dependency — not part of the UK",
+              "A county of England",
+              "A member state of the EU",
+              "A British Overseas Territory"
+            ],
+            answer: "A Crown Dependency — not part of the UK" },
+          { type: "mc", q: "Is Jersey a member of the European Union?",
+            choices: ["No", "Yes", "Only an associate member", "Only for trade purposes"],
+            answer: "No" },
+          { type: "mc", q: "Jersey runs its own…",
+            choices: [
+              "Legislature, judiciary and tax system",
+              "Defence and foreign policy",
+              "UN seat",
+              "Currency, completely separate from sterling"
+            ],
+            answer: "Legislature, judiciary and tax system" },
+          { type: "tokens", q: "Build the status of Jersey.",
+            tokens: ["Crown", "Dependency"] }
         ]
       },
       {
-        id: "lists_l2", name: "Modify", emoji: "✏️",
+        id: "crown_l2", name: "Relationship with the UK", emoji: "🤝",
         exercises: [
-          { type: "mc", q: "What does this print?",
-            code: "nums = [1, 2]\nnums.append(3)\nprint(nums)",
-            choices: ["[1, 2, 3]", "[3, 1, 2]", "[1, 2]", "Error"],
-            answer: "[1, 2, 3]" },
-          { type: "mc", q: "What does this print?",
-            code: "nums = [1, 2, 3]\nnums.pop()\nprint(nums)",
-            choices: ["[1, 2]", "[2, 3]", "[1, 2, 3]", "3"],
-            answer: "[1, 2]" },
-          { type: "fill", q: "Change the first item of nums to 99.",
-            code: "nums = [1, 2, 3]\nnums[___] = 99", answer: "0" },
-          { type: "mc", q: "What does this print?", code: "print([1, 2, 3, 4][1:3])",
-            choices: ["[2, 3]", "[1, 2]", "[2, 3, 4]", "[3, 4]"],
-            answer: "[2, 3]" },
-          { type: "tokens", q: "Add 5 to the end of the list scores.",
-            tokens: ["scores", ".", "append", "(", "5", ")"] },
-          { type: "mc", q: "What does this print?",
-            code: "nums = [1, 2, 3]\nnums[0] = 10\nprint(nums)",
-            choices: ["[10, 2, 3]", "[1, 2, 10]", "[10]", "Error"],
-            answer: "[10, 2, 3]" },
-          { type: "mc", q: "How many items are in  [ ] ?",
-            choices: ["0", "1", "None", "Error"], answer: "0" }
+          { type: "mc", q: "Who is responsible for Jersey's defence?",
+            choices: ["The United Kingdom", "Jersey itself", "France", "The European Union"],
+            answer: "The United Kingdom" },
+          { type: "mc", q: "Jersey's international relations are handled…",
+            choices: [
+              "By the UK, in consultation with Jersey",
+              "Entirely by Jersey alone",
+              "By the EU",
+              "By the Council of Europe"
+            ],
+            answer: "By the UK, in consultation with Jersey" },
+          { type: "mc", q: "Who represents the Sovereign in Jersey?",
+            choices: ["The Lieutenant-Governor", "The Bailiff", "The Chief Minister", "The Dean of Jersey"],
+            answer: "The Lieutenant-Governor" },
+          { type: "mc", q: "Final appeals from Jersey's Court of Appeal go to…",
+            choices: [
+              "The Judicial Committee of the Privy Council (London)",
+              "The UK Supreme Court",
+              "The European Court of Justice",
+              "The States Assembly"
+            ],
+            answer: "The Judicial Committee of the Privy Council (London)" }
         ]
       },
       {
-        id: "lists_l3", name: "Iterate & Test", emoji: "🔁",
+        id: "crown_l3", name: "Human Rights in Jersey", emoji: "📖",
         exercises: [
-          { type: "mc", q: "What does this print?",
-            code: "for x in [1, 2, 3]:\n    print(x)",
-            choices: ["1, then 2, then 3", "[1, 2, 3]", "x x x", "0, 1, 2"],
-            answer: "1, then 2, then 3" },
-          { type: "mc", q: "What does this print?", code: "print(3 in [1, 2, 3])",
-            choices: ["True", "False", "3", "Error"], answer: "True" },
-          { type: "mc", q: "What does this print?", code: "print(5 in [1, 2, 3])",
-            choices: ["False", "True", "5", "Error"], answer: "False" },
-          { type: "mc", q: "What does this print?",
-            code: "nums = [3, 1, 2]\nnums.sort()\nprint(nums)",
-            choices: ["[1, 2, 3]", "[3, 2, 1]", "[3, 1, 2]", "Error"],
-            answer: "[1, 2, 3]" },
-          { type: "mc", q: "What does this print?",
-            code: "nums = [1, 2, 3]\nnums.reverse()\nprint(nums)",
-            choices: ["[3, 2, 1]", "[1, 2, 3]", "[2, 1, 3]", "Error"],
-            answer: "[3, 2, 1]" },
-          { type: "mc", q: "What does this print?",
-            code: "total = 0\nfor n in [1, 2, 3]:\n    total += n\nprint(total)",
-            choices: ["6", "3", "123", "0"], answer: "6" },
-          { type: "order", q: "Arrange the code to print the sum of [1, 2, 3].",
-            lines: ["total = 0", "for n in [1, 2, 3]:", "    total += n", "print(total)"] }
+          { type: "mc", q: "Which Jersey law brings the European Convention on Human Rights into local law?",
+            choices: ["Human Rights (Jersey) Law 2000", "Public Elections (Jersey) Law 2002", "Royal Court (Jersey) Law 1948", "Magistrate's Court Law"],
+            answer: "Human Rights (Jersey) Law 2000" },
+          { type: "mc", q: "ECHR stands for…",
+            choices: [
+              "European Convention on Human Rights",
+              "European Council for Human Resources",
+              "Election Conduct & Honest Reporting",
+              "Equality & Civic Human Rights"
+            ],
+            answer: "European Convention on Human Rights" },
+          { type: "fill", q: "Complete the law's year.",
+            code: "Human Rights (Jersey) Law ___", answer: "2000" },
+          { type: "tokens", q: "Build the law's short name.",
+            tokens: ["Human", "Rights", "(Jersey)", "Law", "2000"] }
         ]
       }
     ]
   },
   {
-    id: "oop", title: "Classes & Objects", icon: "🧱",
-    color: "var(--gold)", colorD: "var(--gold-d)",
-    advanced: true,
-    levels: [
-      {
-        id: "oop_l1", name: "Classes & Objects", emoji: "🏗️",
-        exercises: [
-          { type: "mc", q: "What is a class in Python?",
-            choices: [
-              "A blueprint for creating objects",
-              "A kind of loop",
-              "A built-in number type",
-              "A way to import code"
-            ],
-            answer: "A blueprint for creating objects" },
-          { type: "mc", q: "Which keyword defines a class?", codeChoices: true,
-            choices: ["class", "def", "object", "new"], answer: "class" },
-          { type: "mc", q: "Which method runs automatically when an object is created?",
-            codeChoices: true,
-            choices: ["__init__", "__main__", "start", "create"], answer: "__init__" },
-          { type: "fill", q: "Name the method that sets up a new object.",
-            code: "class Dog:\n    def ___(self):\n        self.legs = 4", answer: "__init__" },
-          { type: "mc", q: "What does self refer to inside a method?",
-            choices: [
-              "The current object",
-              "The class name",
-              "A global variable",
-              "Whatever the user typed"
-            ],
-            answer: "The current object" },
-          { type: "mc", q: "What does this print?",
-            code: "class Dog:\n    def __init__(self, name):\n        self.name = name\nd = Dog(\"Rex\")\nprint(d.name)",
-            choices: ["Rex", "name", "Dog", "Error"], answer: "Rex" },
-          { type: "tokens", q: "Create a Dog object and store it in d.",
-            tokens: ["d", "=", "Dog", "(", ")"] }
-        ]
-      },
-      {
-        id: "oop_l2", name: "Methods", emoji: "⚙️",
-        exercises: [
-          { type: "mc", q: "How do you call a method named bark on an object dog?",
-            codeChoices: true,
-            choices: ["dog.bark()", "bark(dog)", "dog->bark()", "bark.dog()"],
-            answer: "dog.bark()" },
-          { type: "mc", q: "What is the first parameter of an instance method?",
-            codeChoices: true,
-            choices: ["self", "this", "me", "cls"], answer: "self" },
-          { type: "mc", q: "What does this print?",
-            code: "class Cat:\n    def speak(self):\n        return \"Meow\"\nc = Cat()\nprint(c.speak())",
-            choices: ["Meow", "speak", "None", "Error"], answer: "Meow" },
-          { type: "fill", q: "Complete the method header so it can reach the object.",
-            code: "class Bird:\n    def fly(___):\n        print(\"flap\")", answer: "self" },
-          { type: "mc", q: "What does this print?",
-            code: "class Counter:\n    def __init__(self):\n        self.n = 0\n    def add(self):\n        self.n += 1\nc = Counter()\nc.add()\nc.add()\nprint(c.n)",
-            choices: ["2", "0", "1", "Error"], answer: "2" },
-          { type: "fill", q: "Call the greet method on the object p.",
-            code: "p.___()", answer: "greet" },
-          { type: "order", q: "Arrange a class with a method, then call it.",
-            lines: ["class Dog:", "    def bark(self):", "        print(\"Woof\")", "d = Dog()", "d.bark()"] }
-        ]
-      },
-      {
-        id: "oop_l3", name: "Inheritance", emoji: "🧬",
-        exercises: [
-          { type: "mc", q: "What does inheritance let a class do?",
-            choices: [
-              "Reuse attributes and methods from another class",
-              "Run faster",
-              "Loop over a list",
-              "Convert strings to numbers"
-            ],
-            answer: "Reuse attributes and methods from another class" },
-          { type: "mc", q: "How do you make Dog inherit from Animal?", codeChoices: true,
-            choices: ["class Dog(Animal):", "class Dog: Animal", "class Dog -> Animal:", "class Dog from Animal:"],
-            answer: "class Dog(Animal):" },
-          { type: "fill", q: "Make Cat inherit from Animal.",
-            code: "class Cat(___):\n    pass", answer: "Animal" },
-          { type: "mc", q: "What is it called when a child class replaces a parent's method?",
-            choices: ["Overriding", "Importing", "Indexing", "Slicing"], answer: "Overriding" },
-          { type: "mc", q: "What does this print?",
-            code: "class Animal:\n    def speak(self):\n        print(\"...\")\nclass Dog(Animal):\n    def speak(self):\n        print(\"Woof\")\nd = Dog()\nd.speak()",
-            choices: ["Woof", "...", "Animal", "Error"], answer: "Woof" },
-          { type: "mc", q: "What does this print?",
-            code: "class Animal:\n    def __init__(self):\n        self.alive = True\nclass Dog(Animal):\n    pass\nd = Dog()\nprint(d.alive)",
-            choices: ["True", "False", "None", "Error"], answer: "True" },
-          { type: "order", q: "Arrange a subclass Dog that inherits from Animal.",
-            lines: ["class Animal:", "    def speak(self):", "        print(\"Woof\")", "class Dog(Animal):", "    pass"] }
-        ]
-      }
-    ]
-  },
-  {
-    id: "logic", title: "Logic Gates", icon: "🔌",
+    id: "courts", title: "Courts & Law", icon: "⚖️", advanced: true,
     color: "var(--indigo)", colorD: "var(--indigo-d)",
-    advanced: true,
     levels: [
       {
-        id: "logic_l1", name: "AND, OR, NOT", emoji: "🔀",
+        id: "courts_l1", name: "The Royal Court", emoji: "🏛️",
         exercises: [
-          { type: "mc", q: "What does a logic gate do?",
+          { type: "mc", q: "Who presides over the Royal Court?",
+            choices: ["The Bailiff", "The Lieutenant-Governor", "The Chief Minister", "The Attorney General"],
+            answer: "The Bailiff" },
+          { type: "mc", q: "Who are Jurats?",
             choices: [
-              "Takes true/false inputs and gives a true/false output",
-              "Stores a number in memory",
-              "Repeats code many times",
-              "Converts text to numbers"
+              "Unpaid lay judges who decide questions of fact",
+              "Junior barristers in training",
+              "Members of the Honorary Police",
+              "States Members on jury duty"
             ],
-            answer: "Takes true/false inputs and gives a true/false output" },
-          { type: "mc", q: "An AND gate outputs True only when...",
+            answer: "Unpaid lay judges who decide questions of fact" },
+          { type: "mc", q: "At what age must a Jurat retire?",
+            choices: ["72", "65", "70", "75"], answer: "72" },
+          { type: "mc", q: "The Royal Court's Inferior Number is…",
             choices: [
-              "both inputs are True",
-              "at least one input is True",
-              "both inputs are False",
-              "the inputs are different"
+              "Judge + 2 Jurats (max 4-year sentence)",
+              "Judge + 5 Jurats",
+              "Jury of 12",
+              "A single Magistrate"
             ],
-            answer: "both inputs are True" },
-          { type: "mc", q: "What does this print?", code: "print(True and False)",
-            choices: ["False", "True", "None", "Error"], answer: "False" },
-          { type: "mc", q: "What does this print?", code: "print(True or False)",
-            choices: ["True", "False", "None", "Error"], answer: "True" },
-          { type: "mc", q: "A NOT gate flips its input. What does this print?",
-            code: "print(not True)",
-            choices: ["False", "True", "not True", "Error"], answer: "False" },
-          { type: "mc", q: "Which Python operator works like an OR gate?", codeChoices: true,
-            choices: ["or", "and", "not", "=="], answer: "or" },
-          { type: "fill", q: "Complete the truth table for the AND gate.",
-            code: "A      B      A and B\nTrue   True   True\nTrue   False  False\nFalse  True   ___\nFalse  False  False",
-            answer: "False", accept: ["false"] }
+            answer: "Judge + 2 Jurats (max 4-year sentence)" }
         ]
       },
       {
-        id: "logic_l2", name: "XOR, NAND & NOR", emoji: "⚡",
+        id: "courts_l2", name: "Magistrate's Court", emoji: "🧑‍⚖️",
         exercises: [
-          { type: "mc", q: "An XOR (exclusive or) gate outputs True when...",
-            choices: [
-              "the two inputs are different",
-              "both inputs are True",
-              "both inputs are False",
-              "the two inputs are the same"
-            ],
-            answer: "the two inputs are different" },
-          { type: "mc", q: "Which Python operator gives the XOR of two booleans?",
-            codeChoices: true,
-            choices: ["^", "and", "or", "not"], answer: "^" },
-          { type: "mc", q: "What does this print?", code: "print(True ^ True)",
-            choices: ["False", "True", "1", "Error"], answer: "False" },
-          { type: "mc", q: "What does this print?", code: "print(False ^ True)",
-            choices: ["True", "False", "0", "Error"], answer: "True" },
-          { type: "mc", q: "A NAND gate is 'NOT AND'. Its output is False only when...",
-            choices: [
-              "both inputs are True",
-              "both inputs are False",
-              "the inputs are different",
-              "it is never False"
-            ],
-            answer: "both inputs are True" },
-          { type: "mc", q: "What does this NAND of True and True print?",
-            code: "print(not (True and True))",
-            choices: ["False", "True", "None", "Error"], answer: "False" },
-          { type: "fill", q: "Complete the truth table for the XOR gate.",
-            code: "A      B      A ^ B\nTrue   True   False\nTrue   False  True\nFalse  True   ___\nFalse  False  False",
-            answer: "True", accept: ["true"] }
+          { type: "mc", q: "The Magistrate's Court can impose up to…",
+            choices: ["12 months imprisonment and/or a £10,000 fine", "5 years and unlimited fine", "Life imprisonment", "Only fines, no prison"],
+            answer: "12 months imprisonment and/or a £10,000 fine" },
+          { type: "mc", q: "Who can present a case in the Magistrate's Court for the parish?",
+            choices: ["A Centenier", "Any parishioner", "A Jurat", "A Deputy"],
+            answer: "A Centenier" },
+          { type: "fill", q: "Complete the maximum prison term.",
+            code: "Magistrate's Court max prison = ___ months", answer: "12" },
+          { type: "mc", q: "Which court usually hears the most serious criminal trials?",
+            choices: ["Royal Court — Criminal Assize", "Magistrate's Court", "Parish Hall", "Court of Appeal"],
+            answer: "Royal Court — Criminal Assize" }
         ]
       },
       {
-        id: "logic_l3", name: "Truth Tables", emoji: "📊",
+        id: "courts_l3", name: "Jury & Appeal", emoji: "👥",
         exercises: [
-          { type: "mc", q: "What does a truth table show?",
+          { type: "mc", q: "A criminal jury at the Royal Court has how many people?",
+            choices: ["12", "6", "10", "15"], answer: "12" },
+          { type: "mc", q: "To convict at the Criminal Assize, at least…",
+            choices: ["10 of 12 must vote guilty", "All 12 must agree", "Just a simple majority", "7 of 12"],
+            answer: "10 of 12 must vote guilty" },
+          { type: "mc", q: "Who is eligible for jury service in Jersey?",
+            choices: ["People aged 18–72", "People aged 21+", "Only homeowners", "Only British citizens"],
+            answer: "People aged 18–72" },
+          { type: "mc", q: "After Jersey's Court of Appeal, the final appeal court is…",
             choices: [
-              "Every input combination and its output",
-              "Only the True results",
-              "Which gate runs fastest",
-              "A list of variable names"
+              "The Judicial Committee of the Privy Council",
+              "The UK Supreme Court",
+              "The European Court of Human Rights",
+              "The States Assembly"
             ],
-            answer: "Every input combination and its output" },
-          { type: "mc", q: "How many rows does a truth table with 2 inputs have?",
-            choices: ["4", "2", "3", "8"], answer: "4" },
-          { type: "fill", q: "Complete the truth table for the OR gate.",
-            code: "A      B      A or B\nTrue   True   True\nTrue   False  ___\nFalse  True   True\nFalse  False  False",
-            answer: "True", accept: ["true"] },
-          { type: "fill", q: "Complete the truth table for the NOT gate.",
-            code: "A      not A\nTrue   False\nFalse  ___",
-            answer: "True", accept: ["true"] },
-          { type: "mc", q: "A NOR gate outputs True only when...",
-            choices: [
-              "both inputs are False",
-              "both inputs are True",
-              "the inputs are different",
-              "it is always True"
-            ],
-            answer: "both inputs are False" },
-          { type: "mc", q: "What does this NOR of True and False print?",
-            code: "print(not (True or False))",
-            choices: ["False", "True", "None", "Error"], answer: "False" },
-          { type: "mc", q: "Which gate does this expression represent?",
-            code: "not (A or B)",
-            choices: ["NOR", "NAND", "XOR", "AND"], answer: "NOR" }
+            answer: "The Judicial Committee of the Privy Council" },
+          { type: "order", q: "Order Jersey's courts from lower to higher.",
+            lines: ["Magistrate's Court", "Royal Court", "Jersey Court of Appeal", "Judicial Committee of the Privy Council"] }
         ]
       }
     ]
   },
   {
-    id: "datarep", title: "Data Representation", icon: "🧮",
+    id: "action", title: "Civic Action", icon: "📣", advanced: true,
     color: "var(--pink)", colorD: "var(--pink-d)",
-    advanced: true,
     levels: [
       {
-        id: "datarep_l1", name: "Binary & Denary", emoji: "🔢",
+        id: "action_l1", name: "E-Petitions", emoji: "✍️",
         exercises: [
-          { type: "mc", q: "What is binary?",
-            choices: [
-              "A number system that uses only 0 and 1",
-              "A number system that uses 0 to 9",
-              "A way of writing letters as numbers",
-              "A type of computer memory"
-            ],
-            answer: "A number system that uses only 0 and 1" },
-          { type: "mc", q: "How many different values can a single bit represent?",
-            choices: ["2", "1", "8", "10"], answer: "2" },
-          { type: "mc", q: "How many bits are there in one byte?",
-            choices: ["8", "4", "16", "2"], answer: "8" },
-          { type: "mc", q: "What is a group of 4 bits called?",
-            choices: ["A nibble", "A byte", "A word", "A double"], answer: "A nibble" },
-          { type: "mc", q: "In an 8-bit number, what are the place values from left to right?",
-            codeChoices: true,
-            choices: [
-              "128 64 32 16 8 4 2 1",
-              "1 2 4 8 16 32 64 128",
-              "256 128 64 32 16 8 4 2",
-              "100 90 80 70 60 50 40 30"
-            ],
-            answer: "128 64 32 16 8 4 2 1" },
-          { type: "mc", q: "What is the denary value of the binary number 1010?",
-            code: "1010", codeChoices: true,
-            choices: ["10", "8", "12", "5"], answer: "10" },
-          { type: "fill", q: "Convert the denary number 6 to 4-bit binary.",
-            code: "6 = ___", answer: "0110", accept: ["110"] },
-          { type: "mc", q: "What is the largest denary number you can store in 8 bits?",
-            choices: ["255", "256", "254", "128"], answer: "255" }
+          { type: "mc", q: "From what age can a Jersey resident start or sign an e-petition?",
+            choices: ["16", "18", "21", "Any age"], answer: "16" },
+          { type: "mc", q: "How many supporters does a petition need just to be published?",
+            choices: ["5", "100", "1,000", "5,000"], answer: "5" },
+          { type: "mc", q: "At how many signatures must the relevant Minister give a written response?",
+            choices: ["1,000", "100", "500", "10,000"], answer: "1,000" },
+          { type: "mc", q: "At how many signatures is a petition considered for an in-Committee debate?",
+            choices: ["5,000", "1,000", "10,000", "100,000"], answer: "5,000" },
+          { type: "order", q: "Order the e-petition thresholds (low to high).",
+            lines: ["5 supporters — published", "1,000 signatures — Minister's written response", "5,000 signatures — considered for debate"] },
+          { type: "fill", q: "Fill in the debate threshold.",
+            code: "___ signatures = considered for States debate", answer: "5,000" }
         ]
       },
       {
-        id: "datarep_l2", name: "Hexadecimal", emoji: "🔠",
+        id: "action_l2", name: "Contacting Members", emoji: "✉️",
         exercises: [
-          { type: "mc", q: "What base does the hexadecimal number system use?",
-            choices: ["Base 16", "Base 2", "Base 10", "Base 8"], answer: "Base 16" },
-          { type: "mc", q: "Why do programmers often use hexadecimal?",
+          { type: "mc", q: "To contact your Deputy or Connétable, where is the best place to find their details?",
             choices: [
-              "It is a shorter, easier way to read and write binary",
-              "It is the only system computers understand",
-              "It can store larger numbers than binary",
-              "It uses fewer symbols than binary does"
+              "The States Assembly Members directory",
+              "The Royal Court website",
+              "The UK Parliament website",
+              "Your nearest school"
             ],
-            answer: "It is a shorter, easier way to read and write binary" },
-          { type: "mc", q: "How many bits does a single hexadecimal digit represent?",
-            choices: ["4", "8", "2", "16"], answer: "4" },
-          { type: "mc", q: "Which hex digit represents the denary value 10?",
-            codeChoices: true,
-            choices: ["A", "B", "F", "10"], answer: "A" },
-          { type: "mc", q: "What is the denary value of the hex digit F?",
-            code: "F", codeChoices: true,
-            choices: ["15", "16", "14", "10"], answer: "15" },
-          { type: "mc", q: "What is the binary 1111 written in hexadecimal?",
-            code: "1111", codeChoices: true,
-            choices: ["F", "E", "A", "15"], answer: "F" },
-          { type: "fill", q: "Convert the hexadecimal number 1A to denary.",
-            code: "0x1A = ___", answer: "26" },
-          { type: "mc", q: "What is the denary value of hex 2D?",
-            code: "2D", codeChoices: true,
-            choices: ["45", "44", "33", "29"], answer: "45" }
+            answer: "The States Assembly Members directory" },
+          { type: "mc", q: "Can a member of the public attend a States sitting?",
+            choices: ["Yes — the public gallery is open", "No — sittings are private", "Only on invitation", "Only journalists may attend"],
+            answer: "Yes — the public gallery is open" },
+          { type: "mc", q: "Where would you typically go to attend a States sitting?",
+            choices: ["The States Chamber, St Helier", "Government House", "Morier House only", "The Royal Court"],
+            answer: "The States Chamber, St Helier" },
+          { type: "tokens", q: "Build the directory's role.",
+            tokens: ["States", "Assembly", "Members", "directory"] }
         ]
       },
       {
-        id: "datarep_l3", name: "Binary Arithmetic", emoji: "➕",
+        id: "action_l3", name: "Scrutiny & Complaints", emoji: "🔍",
         exercises: [
-          { type: "mc", q: "What is 1 + 1 in binary?",
-            code: "  1\n+ 1", codeChoices: true,
-            choices: ["10", "11", "2", "1"], answer: "10" },
-          { type: "mc", q: "When you add 1 + 1 in binary, you write 0 and...",
+          { type: "mc", q: "What do Scrutiny Panels do?",
             choices: [
-              "carry 1 into the next column",
-              "stop the calculation",
-              "write a 2 instead",
-              "borrow 1 from the next column"
+              "Review government policy and law, often in public hearings",
+              "Run elections",
+              "Decide criminal cases",
+              "Manage the parishes"
             ],
-            answer: "carry 1 into the next column" },
-          { type: "mc", q: "What is the result of this binary addition?",
-            code: "  0011\n+ 0001", codeChoices: true,
-            choices: ["0100", "0011", "0101", "1000"], answer: "0100" },
-          { type: "mc", q: "What is binary overflow?",
-            choices: [
-              "When a result is too big to fit in the available bits",
-              "When a number has too many zeros",
-              "When two numbers are exactly equal",
-              "When a calculation gives a negative answer"
-            ],
-            answer: "When a result is too big to fit in the available bits" },
-          { type: "mc", q: "Shifting a binary number left by 1 place multiplies it by...",
-            choices: ["2", "1", "4", "10"], answer: "2" },
-          { type: "mc", q: "Shift 0001 left by 2 places. What is the result?",
-            code: "0001 << 2", codeChoices: true,
-            choices: ["0100", "0010", "1000", "0001"], answer: "0100" },
-          { type: "fill", q: "Shift 0010 left by 1 place. Write the 4-bit result.",
-            code: "0010 << 1 = ___", answer: "0100", accept: ["100"] },
-          { type: "mc", q: "Shifting a binary number right by 1 place...",
-            choices: [
-              "divides it by 2",
-              "multiplies it by 2",
-              "adds 1 to it",
-              "makes no change"
-            ],
-            answer: "divides it by 2" }
-        ]
-      }
-    ]
-  },
-  {
-    id: "media", title: "Text, Images & Sound", icon: "🖼️",
-    color: "var(--cyan)", colorD: "var(--cyan-d)",
-    advanced: true,
-    levels: [
-      {
-        id: "media_l1", name: "ASCII & Characters", emoji: "🔤",
-        exercises: [
-          { type: "mc", q: "How is a character such as 'A' stored in a computer?",
-            choices: [
-              "As a binary number defined by a character set",
-              "As a tiny picture of the letter",
-              "As the sound of the letter",
-              "It is not stored, only displayed"
-            ],
-            answer: "As a binary number defined by a character set" },
-          { type: "mc", q: "How many bits does standard ASCII use for each character?",
-            choices: ["7", "8", "16", "4"], answer: "7" },
-          { type: "mc", q: "How many different characters can 7-bit ASCII represent?",
-            choices: ["128", "127", "256", "64"], answer: "128" },
-          { type: "mc", q: "In ASCII the code for 'A' is 65. What is the code for 'C'?",
-            choices: ["67", "66", "68", "97"], answer: "67" },
-          { type: "mc", q: "In ASCII, the codes for the letters A, B, C... are...",
-            choices: [
-              "consecutive (65, 66, 67, ...)",
-              "random for each letter",
-              "all the same value",
-              "stored as words, not numbers"
-            ],
-            answer: "consecutive (65, 66, 67, ...)" },
-          { type: "mc", q: "What is Unicode used for?",
-            choices: [
-              "Representing characters from many languages, plus symbols and emoji",
-              "Storing only English capital letters",
-              "Compressing images",
-              "Measuring sound quality"
-            ],
-            answer: "Representing characters from many languages, plus symbols and emoji" },
-          { type: "mc", q: "Why might a system use Unicode instead of ASCII?",
-            choices: [
-              "It can represent many more characters",
-              "It always uses fewer bits",
-              "It is the only set computers understand",
-              "It cannot store emoji"
-            ],
-            answer: "It can represent many more characters" },
-          { type: "fill", q: "In ASCII 'A' is 65 and 'B' is 66. What is the code for 'E'?",
-            code: "'A' = 65,  'E' = ___", answer: "69" }
-        ]
-      },
-      {
-        id: "media_l2", name: "Images", emoji: "🖼️",
-        exercises: [
-          { type: "mc", q: "What is a bitmap image made up of?",
-            choices: ["A grid of pixels", "Lines and curves", "Characters", "Sound samples"],
-            answer: "A grid of pixels" },
-          { type: "mc", q: "What does 'colour depth' mean?",
-            choices: [
-              "The number of bits used to store each pixel",
-              "How bright the image is",
-              "The width of the image in pixels",
-              "How much the image is compressed"
-            ],
-            answer: "The number of bits used to store each pixel" },
-          { type: "mc", q: "An image has a colour depth of 1 bit. How many colours can it show?",
-            choices: ["2", "1", "8", "16"], answer: "2" },
-          { type: "mc", q: "How many colours can a colour depth of 4 bits represent?",
-            choices: ["16", "8", "4", "32"], answer: "16" },
-          { type: "mc", q: "What is the resolution of an image?",
-            choices: [
-              "The number of pixels (width × height)",
-              "The number of colours it uses",
-              "How big the file is on disk",
-              "How fast it loads"
-            ],
-            answer: "The number of pixels (width × height)" },
-          { type: "mc", q: "What happens to the file size if you increase the colour depth?",
-            choices: ["It increases", "It decreases", "It stays the same", "It becomes zero"],
-            answer: "It increases" },
-          { type: "fill", q: "An image is 10 pixels wide and 8 pixels tall. How many pixels in total?",
-            code: "10 × 8 = ___", answer: "80" },
-          { type: "fill", q: "An image is 4×4 pixels with a colour depth of 2 bits. What is its size in bits?",
-            code: "4 × 4 × 2 = ___ bits", answer: "32" }
-        ]
-      },
-      {
-        id: "media_l3", name: "Sound", emoji: "🔊",
-        exercises: [
-          { type: "mc", q: "Real-world sound is analogue. How does a computer store it?",
-            choices: [
-              "By sampling it and storing the values in binary",
-              "As a single binary number",
-              "As a picture of the sound wave",
-              "As ASCII text"
-            ],
-            answer: "By sampling it and storing the values in binary" },
-          { type: "mc", q: "What is sampling?",
-            choices: [
-              "Measuring the wave's amplitude at regular intervals",
-              "Playing the sound back slowly",
-              "Removing quiet parts of the sound",
-              "Converting sound into text"
-            ],
-            answer: "Measuring the wave's amplitude at regular intervals" },
-          { type: "mc", q: "What is the sample rate?",
-            choices: [
-              "The number of samples taken per second",
-              "The number of bits per sample",
-              "How loud the sound is",
-              "The length of the sound in seconds"
-            ],
-            answer: "The number of samples taken per second" },
-          { type: "mc", q: "What unit is sample rate measured in?",
-            choices: ["Hertz (Hz)", "Bits", "Pixels", "Bytes"], answer: "Hertz (Hz)" },
-          { type: "mc", q: "What is the bit depth of a sound recording?",
-            choices: [
-              "The number of bits used to store each sample",
-              "The number of samples per second",
-              "The total length of the sound",
-              "The number of speakers used"
-            ],
-            answer: "The number of bits used to store each sample" },
-          { type: "mc", q: "What is the effect of a higher sample rate?",
-            choices: [
-              "Better quality but a larger file",
-              "Worse quality and a smaller file",
-              "No change to quality or size",
-              "It removes the sound entirely"
-            ],
-            answer: "Better quality but a larger file" },
-          { type: "fill", q: "A sound has 500 samples, each stored using 8 bits. What is its size in bits?",
-            code: "500 × 8 = ___ bits", answer: "4000" },
-          { type: "fill", q: "A 2-second clip is sampled 1000 times per second. How many samples in total?",
-            code: "1000 × 2 = ___", answer: "2000" }
+            answer: "Review government policy and law, often in public hearings" },
+          { type: "mc", q: "Can members of the public attend a Scrutiny public hearing?",
+            choices: ["Yes", "No — closed-door only", "Only Centeniers may attend", "Only journalists"],
+            answer: "Yes" },
+          { type: "mc", q: "Which body considers complaints about government administration?",
+            choices: ["The States of Jersey Complaints Board", "The Royal Court", "The Honorary Police", "The Comité des Connétables"],
+            answer: "The States of Jersey Complaints Board" },
+          { type: "order", q: "Order escalating ways to push an issue.",
+            lines: ["Contact your Deputy or Connétable", "Start or sign an e-petition", "Attend a Scrutiny public hearing", "Complain to the States of Jersey Complaints Board"] }
         ]
       }
     ]
   }
 ];
 
-const CORE_TOPIC_IDS = ["vars", "select", "loops", "funcs"];
+
+const CORE_TOPIC_IDS = ["vote", "states", "parishes", "youth"];
 const ADVANCED_UNLOCK_THRESHOLD = 2;  // L2 cleared in this many core topics
 
 /* ===================== STATE & STORAGE ===================== */
@@ -2400,526 +2096,134 @@ function distinctChoices(answer, others, n) {
 }
 
 /* ---- vars topic ---- */
-function genCompoundAssign() {
-  const start = pickInt(2, 20);
-  const op = pickFrom(["+=", "-=", "*="]);
-  const operand = pickInt(2, 5);
-  let result;
-  if (op === "+=") result = start + operand;
-  else if (op === "-=") result = start - operand;
-  else result = start * operand;
-  return {
-    type: "mc",
-    q: "What does this print?",
-    code: `x = ${start}\nx ${op} ${operand}\nprint(x)`,
-    codeChoices: true,
-    choices: distinctChoices(result,
-      [result + 1, result - 1, start + operand, start - operand, start * operand, start, operand]),
-    answer: String(result)
+/* ===================== PRACTICE GENERATORS =====================
+   Each generator returns a fresh exercise sampled from a fact bank
+   for a topic. Compared to the lessons (fixed questions), Practice
+   shuffles and remixes, so the user keeps seeing varied prompts. */
+
+const VOTE_FACTS = [
+  { q: "Minimum voting age in Jersey?", choices: ["16", "18", "21", "17"], answer: "16" },
+  { q: "Do you need British citizenship to vote in Jersey?", choices: ["No", "Yes", "Only for Senators", "Only for parish votes"], answer: "No" },
+  { q: "On election day, polling stations open from…", choices: ["8am to 8pm", "9am to 5pm", "7am to 10pm", "10am to 4pm"], answer: "8am to 8pm" },
+  { q: "Postal votes must be received by…", choices: ["12 noon on election day", "5pm on election day", "The day before election day", "Anytime after election day"], answer: "12 noon on election day" },
+  { q: "AVR stands for…", choices: ["Automatic Voter Registration", "Annual Voter Roll", "Approved Voting Register", "Adult Voting Rights"], answer: "Automatic Voter Registration" },
+  { q: "If AVR doesn't pick you up, you apply to…", choices: ["The Supplementary Register", "The Comité des Connétables", "The Royal Court", "Your employer"], answer: "The Supplementary Register" },
+  { q: "Next Jersey general election?", choices: ["Sunday 7 June 2026", "Thursday 1 May 2025", "Saturday 5 September 2026", "Tuesday 4 July 2026"], answer: "Sunday 7 June 2026" },
+  { q: "Voting methods available in Jersey?", choices: ["In-person, postal, pre-poll", "In-person only", "In-person or online", "Postal only"], answer: "In-person, postal, pre-poll" }
+];
+
+const STATES_FACTS = [
+  { q: "Total elected Members of the States?", choices: ["49", "37", "12", "60"], answer: "49" },
+  { q: "From 2026, how many Senators?", choices: ["9", "12", "5", "0"], answer: "9" },
+  { q: "From 2026, how many Deputies?", choices: ["28", "37", "12", "20"], answer: "28" },
+  { q: "How many Connétables?", choices: ["12", "9", "6", "1"], answer: "12" },
+  { q: "Who presides over the States Assembly?", choices: ["The Bailiff", "The Chief Minister", "The Lieutenant-Governor", "The Greffier"], answer: "The Bailiff" },
+  { q: "Term length for a States Member?", choices: ["4 years", "5 years", "2 years", "Life"], answer: "4 years" },
+  { q: "Who leads Jersey's government?", choices: ["The Chief Minister", "The Bailiff", "The Lieutenant-Governor", "The Dean"], answer: "The Chief Minister" },
+  { q: "Who represents the Sovereign in Jersey?", choices: ["The Lieutenant-Governor", "The Chief Minister", "The Bailiff", "The Attorney General"], answer: "The Lieutenant-Governor" },
+  { q: "States sittings typically begin on…", choices: ["Tuesdays", "Mondays", "Fridays", "Sundays"], answer: "Tuesdays" }
+];
+
+const PARISH_NAMES = [
+  "St Brelade", "St Clement", "Grouville", "St Helier", "St John", "St Lawrence",
+  "St Martin", "St Mary", "St Ouen", "St Peter", "St Saviour", "Trinity"
+];
+
+const PARISH_FACTS = [
+  { q: "How many parishes in Jersey?", choices: ["12", "9", "6", "24"], answer: "12" },
+  { q: "Head of a Jersey parish?", choices: ["The Connétable", "The Deputy", "The Centenier", "The Bailiff"], answer: "The Connétable" },
+  { q: "Most senior Honorary Police rank?", choices: ["Centenier", "Vingtenier", "Constable's Officer", "Sergeant"], answer: "Centenier" },
+  { q: "Is the Honorary Police paid?", choices: ["No — voluntary", "Yes — by the parish", "Yes — by the States", "Only Centeniers paid"], answer: "No — voluntary" },
+  { q: "Who can present cases in the Magistrate's Court for a parish?", choices: ["A Centenier", "A Vingtenier", "Any parishioner", "A Deputy"], answer: "A Centenier" },
+  { q: "Coordinating body for the parishes?", choices: ["Comité des Connétables", "Council of Ministers", "Royal Court", "Scrutiny Panel"], answer: "Comité des Connétables" },
+  { q: "Parish Hall Enquiries are run by…", choices: ["A Centenier", "A Magistrate", "A Jurat", "The Bailiff"], answer: "A Centenier" }
+];
+
+const YOUTH_FACTS = [
+  { q: "YES stands for…", choices: ["Youth Enquiry Service", "Young Earners' Society", "Youth Election Service", "Youth Education Scheme"], answer: "Youth Enquiry Service" },
+  { q: "YES is for ages…", choices: ["14 to 25", "16 to 18", "11 to 19", "18 to 30"], answer: "14 to 25" },
+  { q: "YES counselling cost?", choices: ["Free and confidential", "£10 a session", "Free for under-16s only", "Paid by referral"], answer: "Free and confidential" },
+  { q: "Main base of the Jersey Youth Service?", choices: ["St James Centre, St Helier", "Government House", "Fort Regent", "The Royal Court"], answer: "St James Centre, St Helier" },
+  { q: "Youth Service curriculum theme?", choices: ["Global citizenship", "Property law", "Bank compliance", "Audit standards"], answer: "Global citizenship" },
+  { q: "Where is YES located?", choices: ["The Link, Eagle House, La Colomberie", "States Chamber", "Howard Davis Farm", "Morier House"], answer: "The Link, Eagle House, La Colomberie" }
+];
+
+const CANDIDATE_FACTS = [
+  { q: "Supporters needed to nominate a candidate?", choices: ["10 (1 proposer + 9 seconders)", "5", "20", "50"], answer: "10 (1 proposer + 9 seconders)" },
+  { q: "Where are 2026 nominations submitted?", choices: ["Morier House", "States Chamber", "Royal Court", "Government House"], answer: "Morier House" },
+  { q: "Connétable candidates must (usually) live…", choices: ["In the parish they wish to represent", "Anywhere in Jersey", "Anywhere in the Channel Islands", "In the UK"], answer: "In the parish they wish to represent" },
+  { q: "Can one person stand for two roles at the same election?", choices: ["No", "Yes — any number", "Yes — up to two", "Only with Bailiff approval"], answer: "No" }
+];
+
+const CROWN_FACTS = [
+  { q: "Jersey's constitutional status?", choices: ["Crown Dependency", "Part of the UK", "British Overseas Territory", "EU member state"], answer: "Crown Dependency" },
+  { q: "Is Jersey in the European Union?", choices: ["No", "Yes", "Associate member", "Only for trade"], answer: "No" },
+  { q: "Who handles Jersey's defence?", choices: ["The UK", "Jersey itself", "France", "The EU"], answer: "The UK" },
+  { q: "Law that brings the ECHR into Jersey law?", choices: ["Human Rights (Jersey) Law 2000", "Public Elections Law 2002", "Royal Court Law 1948", "Magistrate's Court Law"], answer: "Human Rights (Jersey) Law 2000" },
+  { q: "Final appeals from Jersey go to…", choices: ["Judicial Committee of the Privy Council", "UK Supreme Court", "European Court of Justice", "States Assembly"], answer: "Judicial Committee of the Privy Council" }
+];
+
+const COURTS_FACTS = [
+  { q: "Who presides over the Royal Court?", choices: ["The Bailiff", "The Chief Minister", "The Attorney General", "The Lieutenant-Governor"], answer: "The Bailiff" },
+  { q: "Jurats are…", choices: ["Unpaid lay judges of fact", "Junior barristers", "Honorary Police officers", "Elected Senators"], answer: "Unpaid lay judges of fact" },
+  { q: "Jurat retirement age?", choices: ["72", "65", "70", "75"], answer: "72" },
+  { q: "Magistrate's Court max prison sentence?", choices: ["12 months", "5 years", "2 years", "Life"], answer: "12 months" },
+  { q: "Magistrate's Court max Level 3 fine?", choices: ["£10,000", "£1,000", "£50,000", "Unlimited"], answer: "£10,000" },
+  { q: "Criminal Assize jury size?", choices: ["12", "6", "10", "15"], answer: "12" },
+  { q: "Votes needed to convict at the Criminal Assize?", choices: ["At least 10 of 12", "All 12", "Simple majority", "7 of 12"], answer: "At least 10 of 12" },
+  { q: "Jury service ages in Jersey?", choices: ["18 to 72", "21 to 70", "16 to 65", "18 to 65"], answer: "18 to 72" }
+];
+
+const ACTION_FACTS = [
+  { q: "Minimum age to sign or start a Jersey e-petition?", choices: ["16", "18", "21", "Any age"], answer: "16" },
+  { q: "Petition supporters needed to publish?", choices: ["5", "100", "1,000", "5,000"], answer: "5" },
+  { q: "Signatures that trigger a Minister's written response?", choices: ["1,000", "100", "500", "10,000"], answer: "1,000" },
+  { q: "Signatures considered for an in-Committee debate?", choices: ["5,000", "1,000", "10,000", "100,000"], answer: "5,000" },
+  { q: "Who hears public hearings on government policy?", choices: ["Scrutiny Panels", "The Royal Court", "The Comité des Connétables", "The Magistrate's Court"], answer: "Scrutiny Panels" },
+  { q: "Where would you find your Deputy's contact details?", choices: ["States Assembly Members directory", "Royal Court website", "UK Parliament site", "Comité des Connétables"], answer: "States Assembly Members directory" }
+];
+
+function makeFactGen(pool) {
+  return function () {
+    const f = pickFrom(pool);
+    return { type: "mc", q: f.q, choices: shuffle(f.choices.slice()), answer: f.answer };
   };
 }
 
-function genTypeOf() {
-  const variants = [
-    { val: String(pickInt(1, 99)), type: "int" },
-    { val: (pickInt(1, 9) + Math.random()).toFixed(2), type: "float" },
-    { val: `"${pickFrom(["hello", "Python", "code", "Sam"])}"`, type: "str" },
-    { val: pickFrom(["True", "False"]), type: "bool" }
-  ];
-  const pick = pickFrom(variants);
+function genParishName() {
+  const name = pickFrom(PARISH_NAMES);
+  const others = PARISH_NAMES.filter(n => n !== name);
+  const distractors = shuffle(others).slice(0, 3);
   return {
     type: "mc",
-    q: `What is the type of ${pick.val}?`,
-    codeChoices: true,
-    choices: ["int", "float", "str", "bool"],
-    answer: pick.type
+    q: "Which of these is a Jersey parish?",
+    choices: shuffle([name, ...["St Albans", "St Andrews", "St Paul", "Westminster", "St Pancras"].filter(x => !distractors.includes(x)).slice(0, 3)]),
+    answer: name
   };
 }
 
-function genIntCast() {
-  const s = pickInt(2, 99);
-  const add = pickInt(2, 20);
-  return {
-    type: "mc",
-    q: "What does this print?",
-    code: `print(int("${s}") + ${add})`,
-    codeChoices: true,
-    choices: distinctChoices(s + add, [s + add + 1, s - add, `"${s}${add}"`, "Error", s, add]),
-    answer: String(s + add)
-  };
-}
-
-function genArithmetic() {
-  const a = pickInt(4, 30);
-  const b = pickInt(2, 9);
-  const op = pickFrom(["+", "-", "*", "//", "%"]);
-  let r;
-  if (op === "+") r = a + b;
-  else if (op === "-") r = a - b;
-  else if (op === "*") r = a * b;
-  else if (op === "//") r = Math.floor(a / b);
-  else r = a % b;
-  return {
-    type: "mc",
-    q: "What does this print?",
-    code: `print(${a} ${op} ${b})`,
-    codeChoices: true,
-    choices: distinctChoices(r, [r + 1, r - 1, a + b, a * b, Math.floor(a / b), a % b, a, b]),
-    answer: String(r)
-  };
-}
-
-/* ---- selection topic ---- */
-function genIfElse() {
-  const x = pickInt(1, 20);
-  const t = pickInt(1, 20);
-  const op = pickFrom([">", "<", ">=", "<=", "=="]);
-  let cond;
-  if (op === ">") cond = x > t;
-  else if (op === "<") cond = x < t;
-  else if (op === ">=") cond = x >= t;
-  else if (op === "<=") cond = x <= t;
-  else cond = x === t;
-  const yes = pickFrom(["yes", "high", "ok", "go"]);
-  const no = pickFrom(["no", "low", "stop", "wait"]);
-  return {
-    type: "mc",
-    q: "What does this print?",
-    code: `x = ${x}\nif x ${op} ${t}:\n    print("${yes}")\nelse:\n    print("${no}")`,
-    choices: shuffle([yes, no, "True", "False"]),
-    answer: cond ? yes : no
-  };
-}
-
-function genElif() {
-  const x = pickInt(0, 100);
-  const a = 30, b = 70;
-  const result = x < a ? "low" : (x < b ? "mid" : "high");
-  return {
-    type: "mc",
-    q: "What does this print?",
-    code: `x = ${x}\nif x < ${a}:\n    print("low")\nelif x < ${b}:\n    print("mid")\nelse:\n    print("high")`,
-    choices: ["low", "mid", "high", "Error"],
-    answer: result
-  };
-}
-
-function genBoolLogic() {
-  const a = pickFrom([true, false]);
-  const b = pickFrom([true, false]);
-  const op = pickFrom(["and", "or"]);
-  const negate = Math.random() < 0.35;
-  let r = op === "and" ? (a && b) : (a || b);
-  if (negate) r = !r;
-  const inner = `${a ? "True" : "False"} ${op} ${b ? "True" : "False"}`;
-  const expr = negate ? `not (${inner})` : inner;
-  return {
-    type: "mc",
-    q: "What does this evaluate to?",
-    code: `print(${expr})`,
-    codeChoices: true,
-    choices: ["True", "False"],
-    answer: r ? "True" : "False"
-  };
-}
-
-/* ---- loops topic ---- */
-function genRangeSum() {
-  const n = pickInt(3, 8);
-  let total = 0;
-  for (let i = 0; i < n; i++) total += i;
-  return {
-    type: "mc",
-    q: "What does this print?",
-    code: `total = 0\nfor i in range(${n}):\n    total += i\nprint(total)`,
-    codeChoices: true,
-    choices: distinctChoices(total, [total + 1, total - 1, n, n * (n + 1) / 2, total + n]),
-    answer: String(total)
-  };
-}
-
-function genForLast() {
-  const n = pickInt(3, 8);
-  return {
-    type: "mc",
-    q: "What number is printed last?",
-    code: `for i in range(${n}):\n    print(i)`,
-    codeChoices: true,
-    choices: distinctChoices(n - 1, [n, n - 2, n + 1, 0, 1]),
-    answer: String(n - 1)
-  };
-}
-
-function genWhileCount() {
-  const start = pickInt(0, 5);
-  const target = start + pickInt(3, 8);
-  return {
-    type: "mc",
-    q: "What is the final value of x?",
-    code: `x = ${start}\nwhile x < ${target}:\n    x += 1\nprint(x)`,
-    codeChoices: true,
-    choices: distinctChoices(target, [target - 1, target + 1, start, start + 1]),
-    answer: String(target)
-  };
-}
-
-/* ---- strings topic ---- */
-function genStrIndex() {
-  const w = pickFrom(["python", "snake", "code", "lesson", "hello", "world", "robot"]);
-  const i = pickInt(0, w.length - 1);
-  const distractors = w.split("").filter(c => c !== w[i]);
-  return {
-    type: "mc",
-    q: "What does this print?",
-    code: `s = "${w}"\nprint(s[${i}])`,
-    codeChoices: true,
-    choices: distinctChoices(w[i], shuffle(distractors)),
-    answer: w[i]
-  };
-}
-
-function genStrSlice() {
-  const w = pickFrom(["python", "snake", "lesson", "coding", "rocket"]);
-  const a = pickInt(0, w.length - 2);
-  const b = pickInt(a + 1, w.length);
-  const slice = w.slice(a, b);
-  return {
-    type: "mc",
-    q: "What does this print?",
-    code: `s = "${w}"\nprint(s[${a}:${b}])`,
-    codeChoices: true,
-    choices: distinctChoices(slice, [
-      w.slice(a, Math.max(a + 1, b - 1)),
-      w.slice(a + 1, b),
-      w.slice(0, b),
-      w.slice(a),
-      w
-    ]),
-    answer: slice
-  };
-}
-
-function genStrMethod() {
-  const choice = pickInt(0, 2);
-  if (choice === 0) {
-    const w = pickFrom(["hello", "Python", "Snake", "code"]);
-    return {
-      type: "mc",
-      q: "What does this print?",
-      code: `print("${w}".upper())`,
-      codeChoices: true,
-      choices: distinctChoices(w.toUpperCase(), [w, w.toLowerCase()]),
-      answer: w.toUpperCase()
-    };
-  } else if (choice === 1) {
-    const w = pickFrom(["HELLO", "PYTHON", "SNAKE", "CODE"]);
-    return {
-      type: "mc",
-      q: "What does this print?",
-      code: `print("${w}".lower())`,
-      codeChoices: true,
-      choices: distinctChoices(w.toLowerCase(), [w, w[0] + w.slice(1).toLowerCase()]),
-      answer: w.toLowerCase()
-    };
-  }
-  const w = pickFrom(["hello", "python", "snake", "lesson", "coding", "robot"]);
-  return {
-    type: "mc",
-    q: "What does this print?",
-    code: `print(len("${w}"))`,
-    codeChoices: true,
-    choices: distinctChoices(w.length, [w.length + 1, w.length - 1, w.length + 2, 0]),
-    answer: String(w.length)
-  };
-}
-
-/* ---- lists topic ---- */
-function genListIndex() {
-  const size = pickInt(3, 5);
-  const arr = [];
-  for (let i = 0; i < size; i++) arr.push(pickInt(1, 30));
-  const i = pickInt(0, size - 1);
-  return {
-    type: "mc",
-    q: "What does this print?",
-    code: `nums = [${arr.join(", ")}]\nprint(nums[${i}])`,
-    codeChoices: true,
-    choices: distinctChoices(arr[i], arr.filter(v => v !== arr[i])),
-    answer: String(arr[i])
-  };
-}
-
-function genListLen() {
-  const size = pickInt(2, 7);
-  const arr = [];
-  for (let i = 0; i < size; i++) arr.push(pickFrom(["a", "b", "c", "d", "x", "y", "z"]));
-  return {
-    type: "mc",
-    q: "What does this print?",
-    code: `items = [${arr.map(x => `"${x}"`).join(", ")}]\nprint(len(items))`,
-    codeChoices: true,
-    choices: distinctChoices(size, [size - 1, size + 1, size + 2, 0]),
-    answer: String(size)
-  };
-}
-
-function genListMembership() {
-  const pool = ["red", "blue", "green", "yellow", "pink", "black", "white"];
-  const arr = shuffle(pool).slice(0, pickInt(3, 4));
-  const inside = Math.random() < 0.5;
-  const test = inside
-    ? pickFrom(arr)
-    : pickFrom(pool.filter(x => arr.indexOf(x) < 0));
-  return {
-    type: "mc",
-    q: "What does this print?",
-    code: `colors = [${arr.map(x => `"${x}"`).join(", ")}]\nprint("${test}" in colors)`,
-    codeChoices: true,
-    choices: ["True", "False"],
-    answer: arr.indexOf(test) >= 0 ? "True" : "False"
-  };
-}
-
-/* ---- functions topic ---- */
-function genFuncDouble() {
-  const factor = pickInt(2, 5);
-  const arg = pickInt(2, 10);
-  return {
-    type: "mc",
-    q: "What does this print?",
-    code: `def f(x):\n    return x * ${factor}\nprint(f(${arg}))`,
-    codeChoices: true,
-    choices: distinctChoices(factor * arg, [factor + arg, arg, factor, factor * arg + 1, factor * arg - 1]),
-    answer: String(factor * arg)
-  };
-}
-
-function genFuncDefault() {
-  const def = pickInt(2, 9);
-  const arg = pickInt(2, 9);
-  return {
-    type: "mc",
-    q: "What does this print?",
-    code: `def add(a, b=${def}):\n    return a + b\nprint(add(${arg}))`,
-    codeChoices: true,
-    choices: distinctChoices(arg + def, [arg, def, arg + def + 1, arg - def, arg * def]),
-    answer: String(arg + def)
-  };
-}
-
-/* ---- logic gates topic ---- */
-// Evaluate a random 2-input gate written as a Python expression.
-function genLogicEval() {
-  const a = pickFrom([true, false]);
-  const b = pickFrom([true, false]);
-  const A = a ? "True" : "False";
-  const B = b ? "True" : "False";
-  const gate = pickFrom(["and", "or", "xor", "nand", "nor"]);
-  let r, expr;
-  if (gate === "and")       { r = a && b;       expr = `${A} and ${B}`; }
-  else if (gate === "or")   { r = a || b;       expr = `${A} or ${B}`; }
-  else if (gate === "xor")  { r = a !== b;      expr = `${A} ^ ${B}`; }
-  else if (gate === "nand") { r = !(a && b);    expr = `not (${A} and ${B})`; }
-  else                      { r = !(a || b);    expr = `not (${A} or ${B})`; }
-  return {
-    type: "mc",
-    q: "What does this print?",
-    code: `print(${expr})`,
-    codeChoices: true,
-    choices: ["True", "False"],
-    answer: r ? "True" : "False"
-  };
-}
-
-// Name the gate that a Python expression implements.
-function genGateName() {
-  const gate = pickFrom([
-    { name: "AND",  expr: "a and b" },
-    { name: "OR",   expr: "a or b" },
-    { name: "XOR",  expr: "a ^ b" },
-    { name: "NAND", expr: "not (a and b)" },
-    { name: "NOR",  expr: "not (a or b)" }
-  ]);
-  const others = shuffle(["AND", "OR", "XOR", "NAND", "NOR"].filter(n => n !== gate.name));
-  return {
-    type: "mc",
-    q: "Which logic gate does this expression represent?",
-    code: gate.expr,
-    choices: distinctChoices(gate.name, others, 4),
-    answer: gate.name
-  };
-}
-
-// Fill in one missing output cell of a gate's truth table.
-function genTruthRow() {
-  const gate = pickFrom([
-    { label: "A and B", fn: (a, b) => a && b },
-    { label: "A or B",  fn: (a, b) => a || b },
-    { label: "A ^ B",   fn: (a, b) => a !== b }
-  ]);
-  const rows = [[true, true], [true, false], [false, true], [false, false]];
-  const hide = pickInt(0, 3);
-  const bs = v => (v ? "True" : "False");
-  const lines = ["A".padEnd(7) + "B".padEnd(7) + gate.label];
-  rows.forEach((row, i) => {
-    const out = i === hide ? "___" : bs(gate.fn(row[0], row[1]));
-    lines.push(bs(row[0]).padEnd(7) + bs(row[1]).padEnd(7) + out);
-  });
-  const ans = bs(gate.fn(rows[hide][0], rows[hide][1]));
+function genStatesMath() {
   return {
     type: "fill",
-    q: `Complete the truth table for ${gate.label}.`,
-    code: lines.join("\n"),
-    answer: ans,
-    accept: [ans.toLowerCase()]
-  };
-}
-
-/* ---- data representation topic ---- */
-// Denary -> 8-bit binary, with near-miss binary distractors.
-function genDenToBin() {
-  const n = pickInt(1, 254);
-  const bin = n.toString(2).padStart(8, "0");
-  const others = [n + 1, n - 1, n + 2, n ^ (1 << pickInt(0, 7))]
-    .filter(x => x >= 0 && x <= 255)
-    .map(x => x.toString(2).padStart(8, "0"));
-  return {
-    type: "mc",
-    q: `What is the denary number ${n} in 8-bit binary?`,
-    codeChoices: true,
-    choices: distinctChoices(bin, others),
-    answer: bin
-  };
-}
-
-// 8-bit binary -> denary (unambiguous, so a fill blank).
-function genBinToDen() {
-  const n = pickInt(1, 255);
-  const bin = n.toString(2).padStart(8, "0");
-  return {
-    type: "fill",
-    q: "Convert this 8-bit binary number to denary.",
-    code: `${bin} = ___`,
-    answer: String(n)
-  };
-}
-
-// Hexadecimal -> denary.
-function genHexToDen() {
-  const n = pickInt(10, 255);
-  const hex = n.toString(16).toUpperCase();
-  return {
-    type: "fill",
-    q: "Convert this hexadecimal number to denary.",
-    code: `0x${hex} = ___`,
-    answer: String(n)
-  };
-}
-
-// Denary -> hexadecimal, with near-miss hex distractors.
-function genDenToHex() {
-  const n = pickInt(10, 255);
-  const hex = n.toString(16).toUpperCase();
-  const others = [n + 1, n - 1, n + 16, n - 16]
-    .filter(x => x >= 0 && x <= 255)
-    .map(x => x.toString(16).toUpperCase());
-  return {
-    type: "mc",
-    q: `What is the denary number ${n} in hexadecimal?`,
-    codeChoices: true,
-    choices: distinctChoices(hex, others),
-    answer: hex
-  };
-}
-
-/* ---- text / image / sound topic ---- */
-// ASCII letter code, using the consecutive-from-65 rule.
-function genAsciiCode() {
-  const i = pickInt(1, 25);                 // 1..25 -> B..Z
-  const letter = String.fromCharCode(65 + i);
-  return {
-    type: "fill",
-    q: `In ASCII 'A' has the code 65. The letters are consecutive — what is the code for '${letter}'?`,
-    code: `'A' = 65,  '${letter}' = ___`,
-    answer: String(65 + i)
-  };
-}
-
-// Colour depth (bits per pixel) -> number of colours (2^depth).
-function genColourDepth() {
-  const depth = pickInt(1, 8);
-  const colours = Math.pow(2, depth);
-  const others = [
-    Math.pow(2, depth + 1),
-    Math.pow(2, depth + 2),
-    Math.pow(2, Math.max(0, depth - 1)),
-    depth
-  ];
-  return {
-    type: "mc",
-    q: `An image has a colour depth of ${depth} bit${depth > 1 ? "s" : ""} per pixel. How many different colours can it show?`,
-    choices: distinctChoices(colours, others),
-    answer: String(colours)
-  };
-}
-
-// Image file size = width x height x colour depth (in bits).
-function genImageSize() {
-  const w = pickInt(3, 12);
-  const h = pickInt(3, 12);
-  const depth = pickInt(1, 4);
-  return {
-    type: "fill",
-    q: `A bitmap is ${w} pixels wide and ${h} tall with a colour depth of ${depth} bit${depth > 1 ? "s" : ""}. What is its size in bits?`,
-    code: `${w} × ${h} × ${depth} = ___ bits`,
-    answer: String(w * h * depth)
-  };
-}
-
-// Sound file size = sample rate x bit depth x seconds (in bits).
-function genSoundSize() {
-  const rate = pickFrom([100, 200, 500, 1000]);
-  const depth = pickFrom([4, 8, 16]);
-  const secs = pickInt(2, 5);
-  return {
-    type: "fill",
-    q: `A sound is sampled ${rate} times per second using ${depth} bits per sample for ${secs} seconds. What is its size in bits?`,
-    code: `${rate} × ${depth} × ${secs} = ___ bits`,
-    answer: String(rate * depth * secs)
+    q: "From 2026, the States is 9 Senators + 28 Deputies + how many Connétables?",
+    code: "9 + 28 + ___ = 49",
+    answer: "12"
   };
 }
 
 const PRACTICE_GENERATORS = [
-  { topic: "vars",    gen: genCompoundAssign },
-  { topic: "vars",    gen: genTypeOf },
-  { topic: "vars",    gen: genIntCast },
-  { topic: "vars",    gen: genArithmetic },
-  { topic: "select",  gen: genIfElse },
-  { topic: "select",  gen: genElif },
-  { topic: "select",  gen: genBoolLogic },
-  { topic: "loops",   gen: genRangeSum },
-  { topic: "loops",   gen: genForLast },
-  { topic: "loops",   gen: genWhileCount },
-  { topic: "strings", gen: genStrIndex },
-  { topic: "strings", gen: genStrSlice },
-  { topic: "strings", gen: genStrMethod },
-  { topic: "lists",   gen: genListIndex },
-  { topic: "lists",   gen: genListLen },
-  { topic: "lists",   gen: genListMembership },
-  { topic: "funcs",   gen: genFuncDouble },
-  { topic: "funcs",   gen: genFuncDefault },
-  { topic: "logic",   gen: genLogicEval },
-  { topic: "logic",   gen: genGateName },
-  { topic: "logic",   gen: genTruthRow },
-  { topic: "datarep", gen: genDenToBin },
-  { topic: "datarep", gen: genBinToDen },
-  { topic: "datarep", gen: genHexToDen },
-  { topic: "datarep", gen: genDenToHex },
-  { topic: "media",   gen: genAsciiCode },
-  { topic: "media",   gen: genColourDepth },
-  { topic: "media",   gen: genImageSize },
-  { topic: "media",   gen: genSoundSize }
+  { topic: "vote",       gen: makeFactGen(VOTE_FACTS) },
+  { topic: "states",     gen: makeFactGen(STATES_FACTS) },
+  { topic: "states",     gen: genStatesMath },
+  { topic: "parishes",   gen: makeFactGen(PARISH_FACTS) },
+  { topic: "parishes",   gen: genParishName },
+  { topic: "youth",      gen: makeFactGen(YOUTH_FACTS) },
+  { topic: "candidate",  gen: makeFactGen(CANDIDATE_FACTS) },
+  { topic: "crown",      gen: makeFactGen(CROWN_FACTS) },
+  { topic: "courts",     gen: makeFactGen(COURTS_FACTS) },
+  { topic: "action",     gen: makeFactGen(ACTION_FACTS) }
 ];
+
 
 function practiceTopicUnlocked(topicId) {
   const topic = TOPICS.find(t => t.id === topicId);

@@ -1,7 +1,7 @@
 {
-  "name": "Indent — Learn Python the fun way",
-  "short_name": "Indent",
-  "description": "A Duolingo-style trainer for learning Python — lessons and arcade mode.",
+  "name": "MyTurn — Learn Jersey civics the fun way",
+  "short_name": "MyTurn",
+  "description": "A Duolingo-style trainer for Jersey (Channel Islands) civics — lessons, arcade and practice.",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
