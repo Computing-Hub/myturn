@@ -1,10 +1,13 @@
 # Attributions
 
-The Indent app icon (`icon-192.png`, `icon-512.png`,
-`apple-touch-icon.png`) was generated with Google Gemini and then
-cropped to a square (removing the original "PYTHON programming
-language" caption and Gemini watermark) for use as the PWA icon.
+The MyTurn mascot (`mascot.svg`) and the PWA icons (`icon-192.png`,
+`icon-512.png`, `apple-touch-icon.png`) are original SVG illustrations
+of a Jersey cow — the iconic dairy breed of Jersey, Channel Islands —
+drawn in vanilla SVG using gradients for shading. The PNG icons are
+rendered from a maskable wrapper (full-bleed brand-green background
+with the cow centred inside the 80% safe zone) so they survive
+Android's circle/squircle/hex maskable icon crops.
 
-The in-app hero mascot (`mascot.svg`) is an original two-snake mark
-inspired by the official Python language logo, drawn in Indent's
-brand green and gold.
+This project is a fork of [duoPython / Indent](https://github.com/Computing-Hub/duoPython)
+by Coderra.je; all course content has been replaced with Jersey civics,
+and the original Indent two-snake mascot has been retired.
